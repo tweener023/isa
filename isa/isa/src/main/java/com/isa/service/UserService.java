@@ -35,9 +35,7 @@ public class UserService {
 		userRepository.deleteById(id);
 	}
 	
-	public User findByIndex(String index) {
-		return userRepository.findOneByIndex(index);
-	}
+	public User findByEmail(String email) {return userRepository.findOneByEmail(email);}
 	
 	public List<User> findByLastName(String lastName) {
 		return userRepository.findAllByLastName(lastName);

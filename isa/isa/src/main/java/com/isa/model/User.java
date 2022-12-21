@@ -2,22 +2,19 @@ package com.isa.model;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
+@Table(name = "users")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "indexNumber", unique = true, nullable = false)
-	private String index;
+	@Column(name = "email", unique = true, nullable = false)
+	private String email;
 
 	@Column(name = "firstName", nullable = false)
 	private String firstName;
@@ -25,17 +22,21 @@ public class User {
 	@Column(name = "lastName", nullable = false)
 	private String lastName;
 
+	@Column(name = "pointsCollected", nullable = false)
+	private Integer pointsCollected;
+
 
 	public User() {
 		super();
 	}
 
-	public User(Integer id, String index, String firstName, String lastName) {
+	public User(Integer id, String email, String firstName, String lastName, Integer pointsCollected) {
 		super();
 		this.id = id;
-		this.index = index;
+		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.pointsCollected = pointsCollected;
 	}
 
 	public Integer getId() {
@@ -46,12 +47,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getIndex() {
-		return index;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setIndex(String index) {
-		this.index = index;
+	public void setEmail(String index) {
+		this.email = index;
 	}
 
 	public String getFirstName() {
@@ -70,6 +71,13 @@ public class User {
 		this.lastName = lastName;
 	}
 
+	public int getPointsCollected() {
+		return pointsCollected;
+	}
+
+	public void setPointsCollected(Integer pointsCollected) {
+		this.pointsCollected = pointsCollected;
+	}
 
 	@Override	
 	public boolean equals(Object o) {
@@ -80,19 +88,19 @@ public class User {
 			return false;
 		}
 		User s = (User) o;
-		if (s.index == null || index == null) {
+		if (s.email == null || email == null) {
 			return false;
 		}
-		return Objects.equals(index, s.index);
+		return Objects.equals(email, s.email);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(index);
+		return Objects.hashCode(email);
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", index=" + index + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName +  ", pointsCollected=" + pointsCollected + "]";
 	}
 }

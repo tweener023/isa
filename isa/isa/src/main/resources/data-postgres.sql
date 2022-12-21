@@ -1,10 +1,10 @@
-insert into "user" (index_number, first_name, last_name) values ('5', 'Marko', 'Marković');
-insert into "user" (index_number, first_name, last_name) values ('ra2-2014', 'Milan', 'Milanović');
-insert into "user" (index_number, first_name, last_name) values ('ra3-2014', 'Ivana', 'Ivanović');
-insert into "user" (index_number, first_name, last_name) values ('ra4-2014', 'Bojan', 'Bojanović');
-insert into "user" (index_number, first_name, last_name) values ('ra5-2014', 'Pera', 'Perić');
-insert into "user" (index_number, first_name, last_name) values ('ra6-2014', 'Zoran', 'Zoranović');
-insert into "user" (index_number, first_name, last_name) values ('ra7-2014', 'Bojana', 'Bojanović');
-insert into "user" (index_number, first_name, last_name) values ('ra8-2014', 'Milana', 'Milanović');
-insert into "user" (index_number, first_name, last_name) values ('ra9-2014', 'Jovana', 'Jovanić');
+insert into users (email, first_name, last_name, points_collected) values ('marko@email.com', 'Marko', 'Marković', 5);
+insert into users (email, first_name, last_name, points_collected) values ('milan@email.com', 'Milan', 'Milanović', 4);
+insert into users (email, first_name, last_name, points_collected) values ('ivana@email.com', 'Ivana', 'Ivanović', 4);
+insert into users (email, first_name, last_name, points_collected) values ('bojan@email.com', 'Bojan', 'Bojanović', 2);
+insert into users (email, first_name, last_name, points_collected) values ('pera@email.com', 'Pera', 'Perić', 1);
+insert into users (email, first_name, last_name, points_collected) values ('zoran@email.com', 'Zoran', 'Zoranović', 2);
+insert into users (email, first_name, last_name, points_collected) values ('bojana@email.com', 'Bojana', 'Bojanović', 5);
+insert into users (email, first_name, last_name, points_collected) values ('milana@email.com', 'Milana', 'Milanović', 7);
+insert into users (email, first_name, last_name, points_collected) values ('jovana@email.com', 'Jovana', 'Jovanić', 9);
 

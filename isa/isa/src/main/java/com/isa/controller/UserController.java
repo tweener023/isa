@@ -77,9 +77,10 @@ public class UserController {
 	public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
 
 		User user = new User();
-		user.setIndex(userDTO.getIndex());
+		user.setEmail(userDTO.getEmail());
 		user.setFirstName(userDTO.getFirstName());
 		user.setLastName(userDTO.getLastName());
+		user.setPointsCollected(userDTO.getPointsCollected());
 
 		user = userService.save(user);
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
@@ -95,9 +96,10 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		user.setIndex(userDTO.getIndex());
+		user.setEmail(userDTO.getEmail());
 		user.setFirstName(userDTO.getFirstName());
 		user.setLastName(userDTO.getLastName());
+		user.setPointsCollected(userDTO.getPointsCollected());
 
 		user = userService.save(user);
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
@@ -116,10 +118,10 @@ public class UserController {
 		}
 	}
 
-	@GetMapping(value = "/findIndex")
-	public ResponseEntity<UserDTO> getUserByIndex(@RequestParam String index) {
+	@GetMapping(value = "/findByEmail")
+	public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
 
-		User user = userService.findByIndex(index);
+		User user = userService.findByEmail(email);
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
