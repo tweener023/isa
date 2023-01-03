@@ -8,3 +8,7 @@ insert into users (email, first_name, last_name, points_collected) values ('boja
 insert into users (email, first_name, last_name, points_collected) values ('milana@email.com', 'Milana', 'Milanović', 7);
 insert into users (email, first_name, last_name, points_collected) values ('jovana@email.com', 'Jovana', 'Jovanić', 9);
 
+insert into facility ( center_name, center_address, center_description, center_appointments, center_admins, center_supplies) values ('Klinicki centar Vojvodine', 'Vojvodjanska 16', 'ovo je opis za kcv', null, null, 123);
+insert into facility ( center_name, center_address, center_description, center_appointments, center_admins, center_supplies) values ('Klinicki centar Beograd', 'Beogradska 16', 'ovo je opis za kc bg', null, null, 12);
+insert into facility ( center_name, center_address, center_description, center_appointments, center_admins, center_supplies) values ('Klinicki centar Kragujevac', 'Carapanska 16', 'ovo je opis za kc kg', null, null, 1);
+insert into facility ( center_name, center_address, center_description, center_appointments, center_admins, center_supplies) values ('Klinicki centar Subotica', 'Madjarska 16', 'ovo je opis za kc subotice', null, null, 3);

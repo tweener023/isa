@@ -20,10 +20,10 @@ public class Facility {
     @Column(name = "centerDescription", nullable = false)
     private String centerDescription;
 
-    @Column(name = "centerAppointments", nullable = false)
+    @Column(name = "centerAppointments" /*, nullable = false*/)
     private Appointments[] centerAppointments;
 
-    @Column(name = "centerAdmins", nullable = false)
+    @Column(name = "centerAdmins"/*, nullable = false*/)
     private User[] centerAdmins;
 
     @Column(name = "centerSupplies", unique = true, nullable = false)
