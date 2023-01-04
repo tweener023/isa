@@ -1,5 +1,7 @@
 package com.isa.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
@@ -14,8 +16,9 @@ public class Appointments {
     @Column(name = "userId", unique = true, nullable = true)
     private String userId;
 
-    @Column(name = "date", nullable = false)
-    private Date date;
+    @JsonFormat(pattern = "yyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @Column(name = "dateOfAppointment", nullable = false)
+    private String date;
 
     @Column(name = "facilityName", nullable = false)
     private String facilityName;
@@ -25,7 +28,7 @@ public class Appointments {
         super();
     }
 
-    public Appointments(Integer appointmentId, String userId, Date date, String facilityName) {
+    public Appointments(Integer appointmentId, String userId, String date, String facilityName) {
         this.appointmentId = appointmentId;
         this.userId = userId;
         this.date = date;
@@ -48,11 +51,11 @@ public class Appointments {
         this.userId = userId;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c77dc38c-41c0-47c7-b2d3-39b557f3e982" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isa/src/main/java/com/isa/controller/AppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/isa/src/main/java/com/isa/controller/AppointmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isa/src/main/java/com/isa/dto/AppointmentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/isa/src/main/java/com/isa/dto/AppointmentDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isa/src/main/java/com/isa/model/Appointments.java" beforeDir="false" afterPath="$PROJECT_DIR$/isa/src/main/java/com/isa/model/Appointments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isa/src/main/resources/data-postgres.sql" beforeDir="false" afterPath="$PROJECT_DIR$/isa/src/main/resources/data-postgres.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -12,3 +12,9 @@ insert into facility ( center_name, center_address, center_description, center_a
 insert into facility ( center_name, center_address, center_description, center_appointments, center_admins, center_supplies) values ('Klinicki centar Beograd', 'Beogradska 16', 'ovo je opis za kc bg', null, null, 12);
 insert into facility ( center_name, center_address, center_description, center_appointments, center_admins, center_supplies) values ('Klinicki centar Kragujevac', 'Carapanska 16', 'ovo je opis za kc kg', null, null, 1);
 insert into facility ( center_name, center_address, center_description, center_appointments, center_admins, center_supplies) values ('Klinicki centar Subotica', 'Madjarska 16', 'ovo je opis za kc subotice', null, null, 3);
+
+
+insert into appointments ( user_id, date_of_appointment, facility_name) values ('1', '2021-08-09' , 'Klinicki Centar Vojvodine');
+insert into appointments ( user_id, date_of_appointment, facility_name) values ('2', '2021-08-09', 'Klinicki Centar Vojvodine');
+insert into appointments ( user_id, date_of_appointment, facility_name) values (null, '2021-08-09' , 'Klinicki Centar Vojvodine');
+insert into appointments ( user_id, date_of_appointment, facility_name) values (null , '2021-08-09' , 'Klinicki Centar Vojvodine');
