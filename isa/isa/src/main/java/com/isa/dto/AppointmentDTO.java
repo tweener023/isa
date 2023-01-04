@@ -9,7 +9,7 @@ public class AppointmentDTO {
 
     private Integer appointmentId;
     private String userId;
-    private Date date;
+    private String date;
     private String facilityName;
 
 
@@ -18,7 +18,7 @@ public class AppointmentDTO {
         this(appointments.getAppointmentId(), appointments.getUserId(), appointments.getDate(), appointments.getFacilityName());
     }
 
-    public AppointmentDTO(Integer appointmentId, String userId, Date date, String facilityName) {
+    public AppointmentDTO(Integer appointmentId, String userId, String date, String facilityName) {
         this.appointmentId = appointmentId;
         this.userId = userId;
         this.date = date;
@@ -33,7 +33,7 @@ public class AppointmentDTO {
         return userId;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
