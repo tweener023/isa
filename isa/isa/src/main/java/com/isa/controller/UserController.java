@@ -106,9 +106,18 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		user.setEmail(userDTO.getEmail());
+		user.setPassword(userDTO.getPassword());
 		user.setFirstName(userDTO.getFirstName());
 		user.setLastName(userDTO.getLastName());
+		user.setAddress(userDTO.getAddress());
+		user.setCity(userDTO.getCity());
+		user.setCountry(userDTO.getCountry());
+		user.setPhoneNumber(userDTO.getPhoneNumber());
+		user.setJmbg(userDTO.getJmbg());
+		user.setGender(userDTO.getGender());
+		user.setJob(userDTO.getJob());
+		user.setWorkplace(userDTO.getWorkplace());
+		user.setRole(userDTO.getRole());
 		user.setPointsCollected(userDTO.getPointsCollected());
 
 		user = userService.save(user);
