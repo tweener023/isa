@@ -1,6 +1,7 @@
 package com.isa.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,12 @@ import com.isa.model.User;
 
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+
+	Optional<User> findByEmail(String email);
+
+	Boolean existsByUsername(String username);
+
+	Boolean existsByEmail(String email);
 
 	public User findOneByEmail(String email);
 

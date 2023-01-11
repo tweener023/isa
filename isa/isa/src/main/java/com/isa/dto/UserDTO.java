@@ -1,24 +1,24 @@
 package com.isa.dto;
 
 import com.isa.model.Gender;
-import com.isa.model.Role;
 import com.isa.model.User;
 
 public class UserDTO {
 	private Integer id;
+	private String username;
 	private String email;
 	private String password;
 	private String firstName;
 	private String lastName;
 	private String address;
 	private String city;
+	private String zipCode;
 	private String country;
 	private String phoneNumber;
 	private Integer jmbg;
 	private Gender gender;
 	private String job;
 	private String workplace;
-	private Role role;
 	private Integer pointsCollected;
 
 
@@ -27,29 +27,34 @@ public class UserDTO {
 	}
 
 	public UserDTO(User user) {
-		this(user.getId(), user.getEmail(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getAddress(), user.getCity(), user.getCountry(), user.getPhoneNumber(), user.getJmbg(), user.getGender(), user.getJob(), user.getWorkplace(), user.getRole(), user.getPointsCollected());
+		this(user.getId(), user.getUsername(), user.getEmail(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getAddress(), user.getCity(), user.getZipCode(), user.getCountry(), user.getPhoneNumber(), user.getJmbg(), user.getGender(), user.getJob(), user.getWorkplace(), user.getPointsCollected());
 	}
 
-	public UserDTO(Integer id, String email, String password, String firstName, String lastName, String address, String city, String country, String phoneNumber, Integer jmbg, Gender gender, String job, String workplace, Role role, Integer pointsCollected) {
+	public UserDTO(Integer id, String username, String email, String password, String firstName, String lastName, String address, String city, String zipCode, String country, String phoneNumber, Integer jmbg, Gender gender, String job, String workplace, Integer pointsCollected) {
 		this.id = id;
+		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.city = city;
+		this.zipCode = zipCode;
 		this.country = country;
 		this.phoneNumber = phoneNumber;
 		this.jmbg = jmbg;
 		this.gender = gender;
 		this.job = job;
 		this.workplace = workplace;
-		this.role = role;
 		this.pointsCollected = pointsCollected;
 	}
 
 	public Integer getId() {
 		return id;
+	}
+
+	public String getUsername() {
+		return username;
 	}
 
 	public String getEmail() {
@@ -76,6 +81,10 @@ public class UserDTO {
 		return city;
 	}
 
+	public String getZipCode() {
+		return zipCode;
+	}
+
 	public String getCountry() {
 		return country;
 	}
@@ -98,10 +107,6 @@ public class UserDTO {
 
 	public String getWorkplace() {
 		return workplace;
-	}
-
-	public Role getRole() {
-		return role;
 	}
 
 	public Integer getPointsCollected() {

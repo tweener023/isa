@@ -1,17 +1,26 @@
 package com.isa.model;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.*;
 
 
 @Entity
-@Table(name = "users")
+@Table(	name = "users",
+		uniqueConstraints = {
+				@UniqueConstraint(columnNames = "username"),
+				@UniqueConstraint(columnNames = "email")
+		})
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	@Column(name = "username", unique = true, nullable = false)
+	private String username;
 
 	@Column(name = "email", unique = true, nullable = false)
 	private String email;
@@ -30,6 +39,9 @@ public class User {
 
 	@Column(name = "city", nullable = false)
 	private String city;
+
+	@Column(name = "zipCode", nullable = false)
+	private String zipCode;
 
 	@Column(name = "country", nullable = false)
 	private String country;
@@ -50,33 +62,35 @@ public class User {
 	@Column(name = "workplace", nullable = false)
 	private String workplace;
 
-	@Enumerated
-	@Column(name = "role", nullable = false)
-	private Role role;
-
 	@Column(name = "pointsCollected", nullable = false)
 	private Integer pointsCollected;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "user_roles",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
 
 
 	public User() {
 		super();
 	}
 
-	public User(String email, String password, String firstName, String lastName, String address, String city, String country, String phoneNumber, Integer jmbg, Gender gender, String job, String workplace, Role role, Integer pointsCollected) {
-		super();
+	public User(String username, String email, String password, String firstName, String lastName, String address, String city, String zipCode, String country, String phoneNumber, Integer jmbg, Gender gender, String job, String workplace, Integer pointsCollected) {
+		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.city = city;
+		this.zipCode = zipCode;
 		this.country = country;
 		this.phoneNumber = phoneNumber;
 		this.jmbg = jmbg;
 		this.gender = gender;
 		this.job = job;
 		this.workplace = workplace;
-		this.role = role;
 		this.pointsCollected = pointsCollected;
 	}
 
@@ -86,6 +100,14 @@ public class User {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getEmail() {
@@ -136,6 +158,14 @@ public class User {
 		this.city = city;
 	}
 
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
 	public String getCountry() {
 		return country;
 	}
@@ -184,12 +214,12 @@ public class User {
 		this.workplace = workplace;
 	}
 
-	public Role getRole() {
-		return role;
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 	public Integer getPointsCollected() {
@@ -224,18 +254,19 @@ public class User {
 	public String toString() {
 		return "User{" +
 				"id=" + id +
+				", username='" + username + '\'' +
 				", email='" + email + '\'' +
 				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
 				", address='" + address + '\'' +
 				", city='" + city + '\'' +
+				", zipCode='" + zipCode + '\'' +
 				", country='" + country + '\'' +
 				", phoneNumber='" + phoneNumber + '\'' +
 				", jmbg=" + jmbg +
 				", gender=" + gender +
 				", job='" + job + '\'' +
 				", workplace='" + workplace + '\'' +
-				", role=" + role +
 				", pointsCollected=" + pointsCollected +
 				'}';
 	}

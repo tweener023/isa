@@ -18,3 +18,7 @@ insert into appointments ( user_id, date_of_appointment, facility_name) values (
 insert into appointments ( user_id, date_of_appointment, facility_name) values ('2', '2021-08-09', 'Klinicki Centar Vojvodine');
 insert into appointments ( user_id, date_of_appointment, facility_name) values (null, '2021-08-09' , 'Klinicki Centar Vojvodine');
 insert into appointments ( user_id, date_of_appointment, facility_name) values (null , '2021-08-09' , 'Klinicki Centar Vojvodine');
+
+insert into roles ( name ) values ('ROLE_USER');
+insert into roles ( name ) values ('ROLE_MEDIC');
+insert into roles ( name ) values ('ROLE_ADMINISTRATOR');

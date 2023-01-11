@@ -77,6 +77,7 @@ public class UserController {
 	public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
 
 		User user = new User();
+		user.setUsername(userDTO.getUsername());
 		user.setEmail(userDTO.getEmail());
 		user.setPassword(userDTO.getPassword());
 		user.setFirstName(userDTO.getFirstName());
@@ -89,7 +90,6 @@ public class UserController {
 		user.setGender(userDTO.getGender());
 		user.setJob(userDTO.getJob());
 		user.setWorkplace(userDTO.getWorkplace());
-		user.setRole(userDTO.getRole());
 		user.setPointsCollected(userDTO.getPointsCollected());
 
 		user = userService.save(user);
@@ -117,7 +117,6 @@ public class UserController {
 		user.setGender(userDTO.getGender());
 		user.setJob(userDTO.getJob());
 		user.setWorkplace(userDTO.getWorkplace());
-		user.setRole(userDTO.getRole());
 		user.setPointsCollected(userDTO.getPointsCollected());
 
 		user = userService.save(user);
