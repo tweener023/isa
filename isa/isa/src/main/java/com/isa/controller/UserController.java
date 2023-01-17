@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.isa.dto.AppointmentDTO;
+import com.isa.dto.FacilityDTO;
 import com.isa.model.Appointments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -189,24 +190,23 @@ public class UserController {
 		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
 	}
 
-	/*
+
 	@GetMapping(value = "/{studentId}/appointments")
-	public ResponseEntity<List<AppointmentDTO>> getUserAppointments(@PathVariable Long userId) {
+	public ResponseEntity<List<AppointmentDTO>> getUserAppointments(@PathVariable Integer userId) {
 		User user = userService.findOne(userId);
 		Set<Appointments> appointments = user.getAppointments();
-		List<AppointmentDTO> appointmentDTO = new ArrayList<>();
+		List<AppointmentDTO> appointmentsDTO = new ArrayList<>();
 		for (Appointments e : appointments) {
 			AppointmentDTO appointmentDTO = new AppointmentDTO();
 			appointmentDTO.setAppointmentId(e.getAppointmentId());
-			appointmentDTO.(e.getGrade());
-			examDTO.setDate(e.getDate());
-			examDTO.setCourse(new CourseDTO(e.getCourse()));
-			examDTO.setStudent(new StudentDTO(e.getStudent()));
+			appointmentDTO.setUser(new UserDTO(e.getUser()));
+			appointmentDTO.setFacility(new FacilityDTO(e.getFacilityName()));
+			appointmentDTO.setDate(e.getDate());
 
-			examsDTO.add(examDTO);
+			appointmentsDTO.add(appointmentDTO);
 		}
-		return new ResponseEntity<>(examsDTO, HttpStatus.OK);
+		return new ResponseEntity<>(appointmentsDTO, HttpStatus.OK);
 	}
 
-	 */
+
 }

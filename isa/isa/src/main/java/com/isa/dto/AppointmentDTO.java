@@ -14,6 +14,10 @@ public class AppointmentDTO {
     private FacilityDTO facility;
 
 
+    public AppointmentDTO() {
+
+    }
+
 
     public AppointmentDTO(Appointments appointments){
         appointmentId = appointments.getAppointmentId();
@@ -43,5 +47,21 @@ public class AppointmentDTO {
 
     public FacilityDTO getFacility() {
         return facility;
+    }
+
+    public void setAppointmentId(Integer appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setFacility(FacilityDTO facility) {
+        this.facility = facility;
     }
 }
