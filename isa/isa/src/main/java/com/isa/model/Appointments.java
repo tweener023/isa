@@ -13,27 +13,18 @@ public class Appointments {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer appointmentId;
 
-    @Column(name = "userId", unique = true, nullable = true)
-    private String userId;
-
     @JsonFormat(pattern = "yyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name = "dateOfAppointment", nullable = false)
     private String date;
 
-    @Column(name = "facilityName", nullable = false)
-    private String facilityName;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private User user;
 
-    public Appointments() {
-        super();
-    }
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "center_id")
+    private Facility center;
 
-    public Appointments(Integer appointmentId, String userId, String date, String facilityName) {
-        this.appointmentId = appointmentId;
-        this.userId = userId;
-        this.date = date;
-        this.facilityName = facilityName;
-    }
 
     public Integer getAppointmentId() {
         return appointmentId;
@@ -43,12 +34,12 @@ public class Appointments {
         this.appointmentId = appointmentId;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(User userId) {
+        this.user = userId;
     }
 
     public String getDate() {
@@ -59,34 +50,12 @@ public class Appointments {
         this.date = date;
     }
 
-    public String getFacilityName() {
-        return facilityName;
+    public Facility getFacilityName() {
+        return center;
     }
 
-    public void setFacilityName(String facilityName) {
-        this.facilityName = facilityName;
+    public void setFacility(Facility facilityName) {
+        this.center = facilityName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Appointments)) return false;
-        Appointments that = (Appointments) o;
-        return Objects.equals(getAppointmentId(), that.getAppointmentId()) && Objects.equals(getUserId(), that.getUserId()) && Objects.equals(getDate(), that.getDate()) && Objects.equals(getFacilityName(), that.getFacilityName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getAppointmentId(), getUserId(), getDate(), getFacilityName());
-    }
-
-    @Override
-    public String toString() {
-        return "Appointments{" +
-                "appointmentId=" + appointmentId +
-                ", userId='" + userId + '\'' +
-                ", date=" + date +
-                ", facilityName='" + facilityName + '\'' +
-                '}';
-    }
 }

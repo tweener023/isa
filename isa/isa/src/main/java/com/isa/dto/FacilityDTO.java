@@ -16,15 +16,14 @@ public class FacilityDTO {
 
 
     public FacilityDTO(Facility facility){
-        this(facility.getCenterId(), facility.getCenterName(), facility.getCenterAddress(), facility.getCenterDescription(), facility.getCenterAppointments(), facility.getCenterAdmins(), facility.getCenterSupplies());
+        this(facility.getCenterId(), facility.getCenterName(), facility.getCenterAddress(), facility.getCenterDescription(), facility.getCenterAdmins(), facility.getCenterSupplies());
     }
 
-    public FacilityDTO(Integer centerId, String centerName, String centerAddress, String centerDescription, Appointments[] centerAppointments, User[] centerAdmins, Integer centerSupplies) {
+    public FacilityDTO(Integer centerId, String centerName, String centerAddress, String centerDescription,User[] centerAdmins, Integer centerSupplies) {
         this.centerId = centerId;
         this.centerName = centerName;
         this.centerAddress = centerAddress;
         this.centerDescription = centerDescription;
-        this.centerAppointments = centerAppointments;
         this.centerAdmins = centerAdmins;
         this.centerSupplies = centerSupplies;
     }

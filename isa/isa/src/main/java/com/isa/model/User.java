@@ -53,7 +53,7 @@ public class User {
 	private Integer jmbg;
 
 	@Enumerated
-	@Column(name = "gender", nullable = false)
+	@Column(name = "gender", nullable = true)
 	private Gender gender;
 
 	@Column(name = "job", nullable = false)
@@ -71,6 +71,8 @@ public class User {
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Appointments> appointments = new HashSet<Appointments>();
 
 	public User() {
 		super();
@@ -226,6 +228,14 @@ public class User {
 		return pointsCollected;
 	}
 
+	public Set<Appointments> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(Set<Appointments> appointments) {
+		this.appointments = appointments;
+	}
+
 	public void setPointsCollected(Integer pointsCollected) {
 		this.pointsCollected = pointsCollected;
 	}
@@ -268,6 +278,8 @@ public class User {
 				", job='" + job + '\'' +
 				", workplace='" + workplace + '\'' +
 				", pointsCollected=" + pointsCollected +
+				", appointments= " + appointments +
 				'}';
 	}
+
 }

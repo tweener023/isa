@@ -2,7 +2,10 @@ package com.isa.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import com.isa.dto.AppointmentDTO;
+import com.isa.model.Appointments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -186,4 +189,24 @@ public class UserController {
 		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
 	}
 
+	/*
+	@GetMapping(value = "/{studentId}/appointments")
+	public ResponseEntity<List<AppointmentDTO>> getUserAppointments(@PathVariable Long userId) {
+		User user = userService.findOne(userId);
+		Set<Appointments> appointments = user.getAppointments();
+		List<AppointmentDTO> appointmentDTO = new ArrayList<>();
+		for (Appointments e : appointments) {
+			AppointmentDTO appointmentDTO = new AppointmentDTO();
+			appointmentDTO.setAppointmentId(e.getAppointmentId());
+			appointmentDTO.(e.getGrade());
+			examDTO.setDate(e.getDate());
+			examDTO.setCourse(new CourseDTO(e.getCourse()));
+			examDTO.setStudent(new StudentDTO(e.getStudent()));
+
+			examsDTO.add(examDTO);
+		}
+		return new ResponseEntity<>(examsDTO, HttpStatus.OK);
+	}
+
+	 */
 }

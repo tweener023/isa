@@ -76,7 +76,6 @@ public class FacilityController {
         Facility facility = new Facility();
         facility.setCenterName(facilityDTO.getCenterName());
         facility.setCenterAddress(facilityDTO.getCenterAddress());
-        facility.setCenterAppointments(facilityDTO.getCenterAppointments());
         facility.setCenterDescription(facilityDTO.getCenterDescription());
         facility.setCenterAdmins(facilityDTO.getCenterAdmins());
         facility.setCenterSupplies(facilityDTO.getCenterSupplies());
@@ -99,7 +98,6 @@ public class FacilityController {
 
         facility.setCenterName(facilityDTO.getCenterName());
         facility.setCenterAddress(facilityDTO.getCenterAddress());
-        facility.setCenterAppointments(facilityDTO.getCenterAppointments());
         facility.setCenterDescription(facilityDTO.getCenterDescription());
         facility.setCenterAdmins(facilityDTO.getCenterAdmins());
         facility.setCenterSupplies(facilityDTO.getCenterSupplies());

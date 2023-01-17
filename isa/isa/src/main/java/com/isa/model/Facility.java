@@ -2,7 +2,9 @@ package com.isa.model;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Facility {
@@ -20,8 +22,8 @@ public class Facility {
     @Column(name = "centerDescription", nullable = false)
     private String centerDescription;
 
-    @Column(name = "centerAppointments" /*, nullable = false*/)
-    private Appointments[] centerAppointments;
+    @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Appointments> centerAppointments = new HashSet<>();
 
     @Column(name = "centerAdmins"/*, nullable = false*/)
     private User[] centerAdmins;
@@ -31,12 +33,11 @@ public class Facility {
 
     public Facility() {super();}
 
-    public Facility(Integer centerId, String centerName, String centerAddress, String centerDescription, Appointments[] centerAppointments, User[] centerAdmins, Integer centerSupplies) {
+    public Facility(Integer centerId, String centerName, String centerAddress, String centerDescription, User[] centerAdmins, Integer centerSupplies) {
         this.centerId = centerId;
         this.centerName = centerName;
         this.centerAddress = centerAddress;
         this.centerDescription = centerDescription;
-        this.centerAppointments = centerAppointments;
         this.centerAdmins = centerAdmins;
         this.centerSupplies = centerSupplies;
     }
@@ -73,11 +74,11 @@ public class Facility {
         this.centerDescription = centerDescription;
     }
 
-    public Appointments[] getCenterAppointments() {
+    public Set<Appointments> getCenterAppointments() {
         return centerAppointments;
     }
 
-    public void setCenterAppointments(Appointments[] centerAppointments) {
+    public void setCenterAppointments(Set<Appointments> centerAppointments) {
         this.centerAppointments = centerAppointments;
     }
 
@@ -102,7 +103,7 @@ public class Facility {
         if (this == o) return true;
         if (!(o instanceof Facility)) return false;
         Facility facility = (Facility) o;
-        return Objects.equals(getCenterId(), facility.getCenterId()) && Objects.equals(getCenterName(), facility.getCenterName()) && Objects.equals(getCenterAddress(), facility.getCenterAddress()) && Objects.equals(getCenterDescription(), facility.getCenterDescription()) && Arrays.equals(getCenterAppointments(), facility.getCenterAppointments()) && Arrays.equals(getCenterAdmins(), facility.getCenterAdmins()) && Objects.equals(getCenterSupplies(), facility.getCenterSupplies());
+        return Objects.equals(getCenterId(), facility.getCenterId()) && Objects.equals(getCenterName(), facility.getCenterName()) && Objects.equals(getCenterAddress(), facility.getCenterAddress()) && Objects.equals(getCenterDescription(), facility.getCenterDescription())  && Arrays.equals(getCenterAdmins(), facility.getCenterAdmins()) && Objects.equals(getCenterSupplies(), facility.getCenterSupplies());
     }
 
     @Override
@@ -112,7 +113,6 @@ public class Facility {
                 ", centerName='" + centerName + '\'' +
                 ", centerAddress='" + centerAddress + '\'' +
                 ", centerDescription='" + centerDescription + '\'' +
-                ", centerAppointments=" + Arrays.toString(centerAppointments) +
                 ", centerAdmins=" + Arrays.toString(centerAdmins) +
                 ", centerSupplies=" + centerSupplies +
                 '}';

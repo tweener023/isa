@@ -4,8 +4,10 @@ import com.isa.dto.AppointmentDTO;
 import com.isa.dto.FacilityDTO;
 import com.isa.model.Appointments;
 import com.isa.model.Facility;
+import com.isa.model.User;
 import com.isa.service.AppointmentService;
 import com.isa.service.FacilityService;
+import com.isa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,11 @@ public class AppointmentController {
     @Autowired
     AppointmentService appointmentService;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    FacilityService facilityService;
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<AppointmentDTO>> getAllAppointments(){
@@ -71,11 +78,29 @@ public class AppointmentController {
     @PostMapping(consumes = "application/json")
     public ResponseEntity<AppointmentDTO> saveAppointment(@RequestBody AppointmentDTO appointmentDTO) {
 
+
+
+        // a new exam must have student and course defined
+        if (appointmentDTO.getFacility() == null ) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        User user = userService.findOne(appointmentDTO.getUser().getId());
+        Facility facility = facilityService.findOne(appointmentDTO.getFacility().getCenterId());
+
+        if (user == null || facility == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Appointments appointments = new Appointments();
         appointments.setAppointmentId(appointmentDTO.getAppointmentId());
         appointments.setDate(appointmentDTO.getDate());
-        appointments.setFacilityName(appointmentDTO.getFacilityName());
-        appointments.setUserId(appointmentDTO.getUserId());
+        appointments.setFacility(facility);
+        appointments.setUser(user);
+
+
+
+        appointments = appointmentService.save(appointments);
 
         return new ResponseEntity<>(new AppointmentDTO(appointments), HttpStatus.CREATED);
     }
@@ -93,8 +118,6 @@ public class AppointmentController {
 
         appointment.setAppointmentId(appointmentDTO.getAppointmentId());
         appointment.setDate(appointmentDTO.getDate());
-        appointment.setUserId(appointmentDTO.getUserId());
-        appointment.setFacilityName(appointmentDTO.getFacilityName());
 
         appointment = appointmentService.save(appointment);
         return new ResponseEntity<>(new AppointmentDTO(appointment), HttpStatus.OK);

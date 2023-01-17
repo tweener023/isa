@@ -2,42 +2,46 @@ package com.isa.dto;
 
 import com.isa.model.Appointments;
 import com.isa.model.Facility;
+import com.isa.model.User;
 
 import java.util.Date;
 
 public class AppointmentDTO {
 
     private Integer appointmentId;
-    private String userId;
+    private UserDTO user;
     private String date;
-    private String facilityName;
+    private FacilityDTO facility;
 
 
 
     public AppointmentDTO(Appointments appointments){
-        this(appointments.getAppointmentId(), appointments.getUserId(), appointments.getDate(), appointments.getFacilityName());
+        appointmentId = appointments.getAppointmentId();
+        user = new UserDTO(appointments.getUser());
+        appointments.getDate();
+        facility = new FacilityDTO(appointments.getFacilityName());
     }
 
-    public AppointmentDTO(Integer appointmentId, String userId, String date, String facilityName) {
+    public AppointmentDTO(Integer appointmentId, UserDTO userId, String date, FacilityDTO facilityName) {
         this.appointmentId = appointmentId;
-        this.userId = userId;
+        this.user = userId;
         this.date = date;
-        this.facilityName = facilityName;
+        this.facility = facilityName;
     }
 
     public Integer getAppointmentId() {
         return appointmentId;
     }
 
-    public String getUserId() {
-        return userId;
+    public UserDTO getUser() {
+        return user;
     }
 
     public String getDate() {
         return date;
     }
 
-    public String getFacilityName() {
-        return facilityName;
+    public FacilityDTO getFacility() {
+        return facility;
     }
 }
