@@ -25,20 +25,20 @@ public class Facility {
     @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Appointments> centerAppointments = new HashSet<>();
 
-    @Column(name = "centerAdmins"/*, nullable = false*/)
-    private User[] centerAdmins;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User admin;
 
     @Column(name = "centerSupplies", unique = true, nullable = false)
     private Integer centerSupplies;
 
     public Facility() {super();}
 
-    public Facility(Integer centerId, String centerName, String centerAddress, String centerDescription, User[] centerAdmins, Integer centerSupplies) {
+    public Facility(Integer centerId, String centerName, String centerAddress, String centerDescription,  Integer centerSupplies) {
         this.centerId = centerId;
         this.centerName = centerName;
         this.centerAddress = centerAddress;
         this.centerDescription = centerDescription;
-        this.centerAdmins = centerAdmins;
         this.centerSupplies = centerSupplies;
     }
 
@@ -82,12 +82,12 @@ public class Facility {
         this.centerAppointments = centerAppointments;
     }
 
-    public User[] getCenterAdmins() {
-        return centerAdmins;
+    public User getCenterAdmins() {
+        return admin;
     }
 
-    public void setCenterAdmins(User[] centerAdmins) {
-        this.centerAdmins = centerAdmins;
+    public void setCenterAdmins(User centerAdmins) {
+        this.admin = centerAdmins;
     }
 
     public Integer getCenterSupplies() {
@@ -96,26 +96,6 @@ public class Facility {
 
     public void setCenterSupplies(Integer centerSupplies) {
         this.centerSupplies = centerSupplies;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Facility)) return false;
-        Facility facility = (Facility) o;
-        return Objects.equals(getCenterId(), facility.getCenterId()) && Objects.equals(getCenterName(), facility.getCenterName()) && Objects.equals(getCenterAddress(), facility.getCenterAddress()) && Objects.equals(getCenterDescription(), facility.getCenterDescription())  && Arrays.equals(getCenterAdmins(), facility.getCenterAdmins()) && Objects.equals(getCenterSupplies(), facility.getCenterSupplies());
-    }
-
-    @Override
-    public String toString() {
-        return "Facility{" +
-                "centerId=" + centerId +
-                ", centerName='" + centerName + '\'' +
-                ", centerAddress='" + centerAddress + '\'' +
-                ", centerDescription='" + centerDescription + '\'' +
-                ", centerAdmins=" + Arrays.toString(centerAdmins) +
-                ", centerSupplies=" + centerSupplies +
-                '}';
     }
 
 }

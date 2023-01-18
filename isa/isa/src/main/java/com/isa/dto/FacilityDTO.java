@@ -11,21 +11,17 @@ public class FacilityDTO {
     private String centerAddress;
     private String centerDescription;
     private Appointments[] centerAppointments;
-    private User[] centerAdmins;
+    private UserDTO centerAdmins;
     private Integer centerSupplies;
 
 
-    public FacilityDTO(Facility facility){
-        this(facility.getCenterId(), facility.getCenterName(), facility.getCenterAddress(), facility.getCenterDescription(), facility.getCenterAdmins(), facility.getCenterSupplies());
-    }
-
-    public FacilityDTO(Integer centerId, String centerName, String centerAddress, String centerDescription,User[] centerAdmins, Integer centerSupplies) {
-        this.centerId = centerId;
-        this.centerName = centerName;
-        this.centerAddress = centerAddress;
-        this.centerDescription = centerDescription;
-        this.centerAdmins = centerAdmins;
-        this.centerSupplies = centerSupplies;
+    public FacilityDTO(Facility facility) {
+        centerId = facility.getCenterId();
+        centerName = facility.getCenterName();
+        centerAddress = facility.getCenterAddress();
+        centerDescription = facility.getCenterDescription();
+        centerAdmins = new UserDTO(facility.getCenterAdmins()) ;
+        centerSupplies = facility.getCenterSupplies();
     }
 
     public Integer getCenterId() {
@@ -48,7 +44,7 @@ public class FacilityDTO {
         return centerAppointments;
     }
 
-    public User[] getCenterAdmins() {
+    public UserDTO getCenterAdmins() {
         return centerAdmins;
     }
 

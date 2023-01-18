@@ -5,6 +5,7 @@ import com.isa.dto.UserDTO;
 import com.isa.model.Facility;
 import com.isa.model.User;
 import com.isa.service.FacilityService;
+import com.isa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,8 @@ public class FacilityController {
     @Autowired
     FacilityService facilityService;
 
+    @Autowired
+    UserService userService;
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<FacilityDTO>> getAllFacilities(){
@@ -73,11 +76,13 @@ public class FacilityController {
     @PostMapping(consumes = "application/json")
     public ResponseEntity<FacilityDTO> saveFacility(@RequestBody FacilityDTO facilityDTO) {
 
+        User user = userService.findOne(facilityDTO.getCenterAdmins().getId());
+
         Facility facility = new Facility();
         facility.setCenterName(facilityDTO.getCenterName());
         facility.setCenterAddress(facilityDTO.getCenterAddress());
         facility.setCenterDescription(facilityDTO.getCenterDescription());
-        facility.setCenterAdmins(facilityDTO.getCenterAdmins());
+        facility.setCenterAdmins(user);
         facility.setCenterSupplies(facilityDTO.getCenterSupplies());
 
 
@@ -91,6 +96,7 @@ public class FacilityController {
 
         // a facility must exist
         Facility facility = facilityService.findOne(facilityDTO.getCenterId());
+        User user = userService.findOne(facilityDTO.getCenterAdmins().getId());
 
         if (facility == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -99,7 +105,7 @@ public class FacilityController {
         facility.setCenterName(facilityDTO.getCenterName());
         facility.setCenterAddress(facilityDTO.getCenterAddress());
         facility.setCenterDescription(facilityDTO.getCenterDescription());
-        facility.setCenterAdmins(facilityDTO.getCenterAdmins());
+        facility.setCenterAdmins(user);
         facility.setCenterSupplies(facilityDTO.getCenterSupplies());
 
 

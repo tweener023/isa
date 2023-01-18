@@ -15,16 +15,20 @@ insert into users (username, email, password, first_name, last_name, address, ci
 insert into users (username, email, password, first_name, last_name, address, city, zip_code, country, phone_number, jmbg, gender, job, workplace, points_collected) values ('pera','pera@email.com', '1234', 'Pera', 'Peric', 'Kisacka 45', 'Novi Sad','21000', 'Srbija', '1234', 2431234, null, 'student', 'FTN',4);
 
 
-insert into facility ( center_name, center_address, center_description, center_admins, center_supplies) values ('Klinicki centar Vojvodine', 'Vojvodjanska 16', 'ovo je opis za kcv', null, 123);
-insert into facility ( center_name, center_address, center_description,  center_admins, center_supplies) values ('Klinicki centar Beograd', 'Beogradska 16', 'ovo je opis za kc bg', null, 12);
-insert into facility ( center_name, center_address, center_description,  center_admins, center_supplies) values ('Klinicki centar Kragujevac', 'Carapanska 16', 'ovo je opis za kc kg', null, 1);
-insert into facility ( center_name, center_address, center_description,  center_admins, center_supplies) values ('Klinicki centar Subotica', 'Madjarska 16', 'ovo je opis za kc subotice', null, 3);
+insert into facility ( user_id, center_name, center_address, center_description, center_supplies) values (1,'Klinicki centar Vojvodine', 'Vojvodjanska 16', 'ovo je opis za kcv', 123);
+insert into facility ( user_id, center_name, center_address, center_description, center_supplies) values (2,'MediGroup', 'Medigroup 16', 'ovo je opis za medigroup', 1);
+insert into facility ( user_id, center_name, center_address, center_description, center_supplies) values (3,'Klinicki centar Beograd', 'Beogradska 16', 'ovo je opis za bg', 3);
+insert into facility ( user_id, center_name, center_address, center_description, center_supplies) values (4,'Klinicki centar AAAA', 'AAAA 16', 'ovo je opis za kcv', 13);
+
+--insert into facility ( center_name, center_address, center_description,  center_supplies) values ('Klinicki centar Beograd', 'Beogradska 16', 'ovo je opis za kc bg', null, 12);
+--insert into facility ( center_name, center_address, center_description,  center_supplies) values ('Klinicki centar Kragujevac', 'Carapanska 16', 'ovo je opis za kc kg', null, 1);
+--insert into facility ( center_name, center_address, center_description,  center_supplies) values ('Klinicki centar Subotica', 'Madjarska 16', 'ovo je opis za kc subotice', null, 3);
 
 
-insert into appointments ( user_id, center_id, date_of_appointment) values (1,2, '2021-08-09');
+insert into appointments ( user_id, center_id, date_of_appointment) values (1,1, '2021-08-09');
 insert into appointments ( user_id, center_id, date_of_appointment) values (2,2, '2021-08-09');
-insert into appointments ( user_id, center_id, date_of_appointment) values (3,2, '2021-08-09');
-insert into appointments ( user_id, center_id, date_of_appointment) values (4,2, '2021-08-09');
+insert into appointments ( user_id, center_id, date_of_appointment) values (3,3, '2021-08-09');
+insert into appointments ( user_id, center_id, date_of_appointment) values (4,4, '2021-08-09');
 
 insert into roles ( name ) values ('ROLE_USER');
 insert into roles ( name ) values ('ROLE_MEDIC');

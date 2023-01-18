@@ -74,6 +74,10 @@ public class User {
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Appointments> appointments = new HashSet<Appointments>();
 
+	@OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Facility> facilities = new HashSet<Facility>();
+
+
 	public User() {
 		super();
 	}
