@@ -27,19 +27,6 @@ public class FacilityController {
     @Autowired
     UserService userService;
 
-    @GetMapping(value = "/all")
-    public ResponseEntity<List<FacilityDTO>> getAllFacilities(){
-        List <Facility> facilities = facilityService.findAll();
-
-        //convert facilities to dtos
-        List<FacilityDTO> facilitiesDTO = new ArrayList<>();
-        for(Facility f : facilities){
-            facilitiesDTO.add(new FacilityDTO(f));
-        }
-
-        return new ResponseEntity<>(facilitiesDTO, HttpStatus.OK);
-    }
-
     /*
 
     // GET /api/facilities?page=0&size=5&sort=centerName,DESC
