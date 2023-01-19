@@ -50,7 +50,7 @@ public class TestController {
         return "Admin Board.";
     }
 
-    @GetMapping(value = "/facilites/all")
+    @GetMapping(value = "/facilities/all")
     public ResponseEntity<List<FacilityDTO>> getAllFacilities(){
         List <Facility> facilities = facilityService.findAll();
 
