@@ -2,6 +2,7 @@ package com.isa.repository;
 
 import com.isa.model.Facility;
 import com.isa.model.User;
+import com.isa.service.FacilityService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,8 @@ public interface FacilityRepository extends JpaRepository<Facility, Integer> {
 
     public Page<Facility> findAll(Pageable pageable);
 
+    public Facility findOneByAdmin(User id);
 
-}
+    }
+
+

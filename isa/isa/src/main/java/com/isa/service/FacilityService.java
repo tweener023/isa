@@ -1,6 +1,7 @@
 package com.isa.service;
 
 import com.isa.model.Facility;
+import com.isa.model.User;
 import com.isa.repository.FacilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,4 +30,6 @@ public class FacilityService {
     public void remove(Integer id) {
          facilityRepository.deleteById(id);
     }
+
+    public Facility findOneByAdmin(User user){return facilityRepository.findOneByAdmin(user);}
 }

@@ -7,6 +7,8 @@ import java.util.Set;
 import com.isa.dto.AppointmentDTO;
 import com.isa.dto.FacilityDTO;
 import com.isa.model.Appointments;
+import com.isa.model.Facility;
+import com.isa.service.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +32,8 @@ public class UserController {
 	@Autowired
 	PasswordEncoder encoder;
 
+	@Autowired
+	FacilityService facilityService;
 
 	@GetMapping(value = "/all")
 	public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -192,21 +196,23 @@ public class UserController {
 	}
 
 
-	@GetMapping(value = "/{studentId}/appointments")
-	public ResponseEntity<List<AppointmentDTO>> getUserAppointments(@PathVariable Integer userId) {
+	@GetMapping(value = "facility/{userId}")
+	public ResponseEntity<FacilityDTO> getFacilityAdmin(@PathVariable Integer userId) {
 		User user = userService.findOne(userId);
-		Set<Appointments> appointments = user.getAppointments();
-		List<AppointmentDTO> appointmentsDTO = new ArrayList<>();
-		for (Appointments e : appointments) {
-			AppointmentDTO appointmentDTO = new AppointmentDTO();
-			appointmentDTO.setAppointmentId(e.getAppointmentId());
-			appointmentDTO.setUser(new UserDTO(e.getUser()));
-			appointmentDTO.setFacility(new FacilityDTO(e.getFacilityName()));
-			appointmentDTO.setDate(e.getDate());
 
-			appointmentsDTO.add(appointmentDTO);
+		if(user == null ){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(appointmentsDTO, HttpStatus.OK);
+
+		Facility facility = facilityService.findOneByAdmin(user);
+
+		if(facility == null ){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		FacilityDTO facilityDTO = new FacilityDTO(facility);
+
+		return new ResponseEntity<>(facilityDTO, HttpStatus.OK);
 	}
 
 

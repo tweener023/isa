@@ -1,7 +1,9 @@
 package com.isa.controller;
 
+import com.isa.dto.AppointmentDTO;
 import com.isa.dto.FacilityDTO;
 import com.isa.dto.UserDTO;
+import com.isa.model.Appointments;
 import com.isa.model.Facility;
 import com.isa.model.User;
 import com.isa.service.FacilityService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin
 @RestController
@@ -111,6 +114,23 @@ public class FacilityController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping(value = "/{studentId}")
+    public ResponseEntity<List<AppointmentDTO>> getUserAppointments(@PathVariable Integer userId) {
+        User user = userService.findOne(userId);
+        Set<Appointments> appointments = user.getAppointments();
+        List<AppointmentDTO> appointmentsDTO = new ArrayList<>();
+        for (Appointments e : appointments) {
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            appointmentDTO.setAppointmentId(e.getAppointmentId());
+            appointmentDTO.setUser(new UserDTO(e.getUser()));
+            appointmentDTO.setFacility(new FacilityDTO(e.getFacilityName()));
+            appointmentDTO.setDate(e.getDate());
+
+            appointmentsDTO.add(appointmentDTO);
+        }
+        return new ResponseEntity<>(appointmentsDTO, HttpStatus.OK);
     }
 
 }
