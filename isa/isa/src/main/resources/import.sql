@@ -28,6 +28,10 @@ insert into facility ( user_id, center_name, center_address, center_description,
 
 
 insert into appointments ( user_id, center_id, date_of_appointment) values (1,1, '2021-08-09');
+insert into appointments ( user_id, center_id, date_of_appointment) values (null,1, '2021-08-09');
+insert into appointments ( user_id, center_id, date_of_appointment) values (null,1, '2021-08-09');
+insert into appointments ( user_id, center_id, date_of_appointment) values (null,1, '2021-08-09');
+
 insert into appointments ( user_id, center_id, date_of_appointment) values (2,2, '2021-08-09');
 insert into appointments ( user_id, center_id, date_of_appointment) values (3,3, '2021-08-09');
 insert into appointments ( user_id, center_id, date_of_appointment) values (4,4, '2021-08-09');

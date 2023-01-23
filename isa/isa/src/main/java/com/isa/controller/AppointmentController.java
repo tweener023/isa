@@ -2,6 +2,7 @@ package com.isa.controller;
 
 import com.isa.dto.AppointmentDTO;
 import com.isa.dto.FacilityDTO;
+import com.isa.dto.UserDTO;
 import com.isa.model.Appointments;
 import com.isa.model.Facility;
 import com.isa.model.User;
@@ -11,12 +12,16 @@ import com.isa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "api/appointments")
 public class AppointmentController {
 
@@ -134,5 +139,28 @@ public class AppointmentController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping(value = "facility/{centerId}")
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    public ResponseEntity<List<AppointmentDTO>> getFacilityAppointments(@PathVariable Integer centerId) {
+        Facility facility = facilityService.findOne(centerId);
+
+        Set<Appointments> appointments = facility.getCenterAppointments();
+        List<AppointmentDTO> appointmentsDTO = new ArrayList<>();
+        for (Appointments e : appointments) {
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            appointmentDTO.setAppointmentId(e.getAppointmentId());
+
+            if (e.getUser()!= null){
+                appointmentDTO.setUser(new UserDTO(e.getUser()));
+            }
+            appointmentDTO.setFacility(new FacilityDTO(e.getFacilityName()));
+            appointmentDTO.setDate(e.getDate());
+
+            appointmentsDTO.add(appointmentDTO);
+        }
+
+        return new ResponseEntity<>(appointmentsDTO, HttpStatus.OK);
     }
 }
