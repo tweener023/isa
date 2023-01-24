@@ -11,6 +11,7 @@ import com.isa.repository.RoleRepository;
 import com.isa.repository.UserRepository;
 import com.isa.security.jwt.JwtUtils;
 import com.isa.security.services.UserDetailsImpl;
+import com.isa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +39,9 @@ public class AuthController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -141,6 +145,11 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @PutMapping(value = "/questionnaire")
+    public void questionnaireIsFilled(@RequestParam Integer jmbg) {
+        userService.questionnaireIsFilled(jmbg);
     }
 
 }

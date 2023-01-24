@@ -48,5 +48,7 @@ public class UserService {
 	public List<User> pronadjiPoPrezimenu(String prezime) {
 		return userRepository.pronadjiUserePoPrezimenu(prezime);
 	}
+
+	public void questionnaireIsFilled(Integer jmbg) { userRepository.questionnaireIsFilled(jmbg);}
 	
 	}

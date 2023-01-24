@@ -65,6 +65,9 @@ public class User {
 	@Column(name = "pointsCollected", nullable = false)
 	private Integer pointsCollected;
 
+	@Column(name = "filledQuestionnaire")
+	private boolean filledQuestionnaire = false;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles",
 			joinColumns = @JoinColumn(name = "user_id"),
@@ -79,7 +82,9 @@ public class User {
 
 
 	public User() {
+
 		super();
+		this.filledQuestionnaire = false;
 	}
 
 	public User(String username, String email, String password, String firstName, String lastName, String address, String city, String zipCode, String country, String phoneNumber, Integer jmbg, Gender gender, String job, String workplace, Integer pointsCollected) {
@@ -98,6 +103,7 @@ public class User {
 		this.job = job;
 		this.workplace = workplace;
 		this.pointsCollected = pointsCollected;
+		this.filledQuestionnaire = false;
 	}
 
 	public Integer getId() {
@@ -242,6 +248,14 @@ public class User {
 
 	public void setPointsCollected(Integer pointsCollected) {
 		this.pointsCollected = pointsCollected;
+	}
+
+	public boolean isFilledQuestionnaire() {
+		return filledQuestionnaire;
+	}
+
+	public void setFilledQuestionnaire(boolean filledQuestionnaire) {
+		this.filledQuestionnaire = filledQuestionnaire;
 	}
 
 	@Override
