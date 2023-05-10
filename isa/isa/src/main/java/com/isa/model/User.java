@@ -297,6 +297,7 @@ public class User {
 				", workplace='" + workplace + '\'' +
 				", pointsCollected=" + pointsCollected +
 				", appointments= " + appointments +
+				", filledQuestionnaire" + filledQuestionnaire +
 				'}';
 	}
 
