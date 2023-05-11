@@ -40,6 +40,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Modifying
 	@Query("update User u set u.filledQuestionnaire = true where u.jmbg = ?1")
 	public void questionnaireIsFilled(Integer jmbg);
+
+	@Transactional
+	@Modifying
+	@Query("update User u set u.accountVerified = true where u.jmbg = ?1")
+	public void accountIsVerified(Integer jmbg);
 	
 	
 

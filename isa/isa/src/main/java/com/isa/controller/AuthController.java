@@ -79,6 +79,8 @@ public class AuthController {
                 userDetails.getJob(),
                 userDetails.getWorkplace(),
                 userDetails.getPointsCollected(),
+                userDetails.isFilledQuestionnaire(),
+                userDetails.isAccountVerified(),
                 roles));
     }
 

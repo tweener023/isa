@@ -22,9 +22,11 @@ public class JwtResponse {
     private String job;
     private String workplace;
     private Integer pointsCollected;
+    private boolean filledQuestionnaire;
+    private boolean verifiedAccount;
     private List<String> roles;
 
-    public JwtResponse(String token, Integer id, String username, String email, String firstName, String lastName, String address, String city, String zipCode, String country, String phoneNumber, Integer jmbg, Gender gender, String job, String workplace, Integer pointsCollected, List<String> roles) {
+    public JwtResponse(String token, Integer id, String username, String email, String firstName, String lastName, String address, String city, String zipCode, String country, String phoneNumber, Integer jmbg, Gender gender, String job, String workplace, Integer pointsCollected, boolean filledQuestionnaire, boolean verifiedAccount, List<String> roles) {
         this.token = token;
         this.id = id;
         this.username = username;
@@ -41,6 +43,8 @@ public class JwtResponse {
         this.job = job;
         this.workplace = workplace;
         this.pointsCollected = pointsCollected;
+        this.filledQuestionnaire = filledQuestionnaire;
+        this.verifiedAccount = verifiedAccount;
         this.roles = roles;
     }
 
@@ -186,5 +190,21 @@ public class JwtResponse {
 
     public void setPointsCollected(Integer pointsCollected) {
         this.pointsCollected = pointsCollected;
+    }
+
+    public boolean isFilledQuestionnaire() {
+        return filledQuestionnaire;
+    }
+
+    public void setFilledQuestionnaire(boolean filledQuestionnaire) {
+        this.filledQuestionnaire = filledQuestionnaire;
+    }
+
+    public boolean isVerifiedAccount() {
+        return verifiedAccount;
+    }
+
+    public void setVerifiedAccount(boolean verifiedAccount) {
+        this.verifiedAccount = verifiedAccount;
     }
 }

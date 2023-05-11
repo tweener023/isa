@@ -31,9 +31,11 @@ public class UserDetailsImpl implements UserDetails {
     private String job;
     private String workplace;
     private Integer pointsCollected;
+    private boolean filledQuestionnaire;
+    private boolean accountVerified;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Integer id, String username, String email, String password, String firstName, String lastName, String address, String city, String zipCode, String country, String phoneNumber, Integer jmbg, Gender gender, String job, String workplace, Integer pointsCollected, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Integer id, String username, String email, String password, String firstName, String lastName, String address, String city, String zipCode, String country, String phoneNumber, Integer jmbg, Gender gender, String job, String workplace, Integer pointsCollected, boolean filledQuestionnaire, boolean accountVerified, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -50,6 +52,8 @@ public class UserDetailsImpl implements UserDetails {
         this.job = job;
         this.workplace = workplace;
         this.pointsCollected = pointsCollected;
+        this.filledQuestionnaire = filledQuestionnaire;
+        this.accountVerified = accountVerified;
         this.authorities = authorities;
     }
 
@@ -75,6 +79,8 @@ public class UserDetailsImpl implements UserDetails {
                 user.getJob(),
                 user.getWorkplace(),
                 user.getPointsCollected(),
+                user.isFilledQuestionnaire(),
+                user.isAccountVerified(),
                 authorities);
     }
 
@@ -167,6 +173,12 @@ public class UserDetailsImpl implements UserDetails {
 
     public Integer getPointsCollected() {
         return pointsCollected;
+    }
+
+    public boolean isFilledQuestionnaire() { return filledQuestionnaire; }
+
+    public boolean isAccountVerified() {
+        return accountVerified;
     }
 
     @Override

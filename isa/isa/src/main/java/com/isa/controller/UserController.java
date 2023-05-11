@@ -98,6 +98,7 @@ public class UserController {
 		user.setWorkplace(userDTO.getWorkplace());
 		user.setPointsCollected(userDTO.getPointsCollected());
 		user.setFilledQuestionnaire(userDTO.isFilledQuestionnaire());
+		user.setAccountVerified(userDTO.isAccountVerified());
 
 		user = userService.save(user);
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
