@@ -1,9 +1,12 @@
 package com.isa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 @Service
 public class EmailService {
@@ -14,12 +17,17 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendVerificationEmail(String to) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject("Registration Conformation");
-        message.setText("Thank you for registrating!");
+    public void sendVerificationEmail(String to, String verificationLink) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        try {
+            helper.setTo(to);
+            helper.setSubject("Registration Confirmation");
+            helper.setText("Thank you for registering! Please click the link below to verify your account:\n\n" + verificationLink, true);
 
-        javaMailSender.send(message);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 }

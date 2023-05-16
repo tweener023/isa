@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -156,7 +157,8 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        emailService.sendVerificationEmail(user.getEmail());
+        String verificationLink = "http://localhost:8080/api/auth/verify?email=" + user.getEmail();
+        emailService.sendVerificationEmail(user.getEmail(), verificationLink);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
@@ -164,6 +166,21 @@ public class AuthController {
     @PutMapping(value = "/questionnaire")
     public void questionnaireIsFilled(@RequestParam Integer jmbg) {
         userService.questionnaireIsFilled(jmbg);
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<?> verifyAccount(@RequestParam String email) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if(optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setAccountVerified(true);
+            userRepository.save(user);
+
+            return ResponseEntity.ok(new MessageResponse("Account verified successfully!"));
+        } else {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: User not found."));
+        }
+
     }
 
 }
