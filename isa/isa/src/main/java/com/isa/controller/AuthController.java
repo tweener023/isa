@@ -11,6 +11,7 @@ import com.isa.repository.RoleRepository;
 import com.isa.repository.UserRepository;
 import com.isa.security.jwt.JwtUtils;
 import com.isa.security.services.UserDetailsImpl;
+import com.isa.service.EmailService;
 import com.isa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,9 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -56,9 +60,15 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        if (!userDetails.isAccountVerified()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Account is not verified."));
+        }
+
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
@@ -145,6 +155,8 @@ public class AuthController {
         }
         user.setRoles(roles);
         userRepository.save(user);
+
+        emailService.sendVerificationEmail(user.getEmail());
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
