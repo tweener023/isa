@@ -57,3 +57,7 @@ insert into user_roles(user_id,role_id) values (7,2);
 insert into user_roles(user_id,role_id) values (8,2);
 
 insert into user_roles(user_id,role_id) values (9,2);
+
+INSERT INTO questionnaire (date, first_name, parent_name, last_name, jmbg, date_of_birth, gender, address, city, phone_number, workplace, job, times_given, blood_type, accepted, drunk_alcohol, had_tattoo, dangerous_job, donated_blood, user_id) VALUES ('2023-05-26', 'John', 'Doe', 'Smith', '1234567890', '1990-01-01', 0, '123 Main St', 'City', '1234567890', 'Company', 'Job', 3, 0, true, true, false, true, false, 1);
+
+

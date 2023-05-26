@@ -53,7 +53,7 @@ public class User {
 	private Integer jmbg;
 
 	@Enumerated
-	@Column(name = "gender", nullable = true)
+	@Column(name = "gender", nullable = false)
 	private Gender gender;
 
 	@Column(name = "job", nullable = false)
