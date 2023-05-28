@@ -69,8 +69,8 @@ public class Questionnaire {
     @Column(name = "donatedBlood", nullable = false)
     private Boolean donatedBlood;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public Questionnaire() {
@@ -257,6 +257,7 @@ public class Questionnaire {
     }
 
     public void setUser(User user) {
+
         this.user = user;
     }
 
