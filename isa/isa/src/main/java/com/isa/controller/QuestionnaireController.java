@@ -1,6 +1,7 @@
 package com.isa.controller;
 
 import com.isa.dto.QuestionnaireDTO;
+import com.isa.dto.UserDTO;
 import com.isa.model.Questionnaire;
 import com.isa.model.User;
 import com.isa.service.QuestionnaireService;
@@ -51,6 +52,10 @@ public class QuestionnaireController {
         user.setFilledQuestionnaire(true);
         userService.save(user);
 
+        UserDTO userDTO = new UserDTO(user);
+        userDTO.setFilledQuestionnaire(true);
+
+
         return new ResponseEntity<>("User and Questionnaire connected successfully", HttpStatus.OK);
     }
 
@@ -92,6 +97,9 @@ public class QuestionnaireController {
         // Update the user's filledQuestionnaire field to true
         user.setFilledQuestionnaire(true);
         userService.save(user);
+
+        UserDTO userDTO = new UserDTO(user);
+        userDTO.setFilledQuestionnaire(true);
 
         // Create and return the response DTO
         QuestionnaireDTO responseDTO = new QuestionnaireDTO(questionnaire);

@@ -20,22 +20,19 @@ public class UserDTO {
 	private String job;
 	private String workplace;
 	private Integer pointsCollected;
-	private boolean filledQuestionnaire = false;
-	private boolean accountVerified = false;
+	private boolean filledQuestionnaire;
+	private boolean accountVerified;
 
 
 	public UserDTO() {
-		this.filledQuestionnaire = false;
-		this.accountVerified = false;
+
 	}
 
 	public UserDTO(User user) {
-		this(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getAddress(), user.getCity(), user.getZipCode(), user.getCountry(), user.getPhoneNumber(), user.getJmbg(), user.getGender(), user.getJob(), user.getWorkplace(), user.getPointsCollected());
-		this.filledQuestionnaire = false;
-		this.accountVerified = false;
+		this(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getAddress(), user.getCity(), user.getZipCode(), user.getCountry(), user.getPhoneNumber(), user.getJmbg(), user.getGender(), user.getJob(), user.getWorkplace(), user.getPointsCollected(), user.isFilledQuestionnaire(), user.isAccountVerified());
 	}
 
-	public UserDTO(Integer id, String username, String email, String password, String firstName, String lastName, String address, String city, String zipCode, String country, String phoneNumber, Integer jmbg, Gender gender, String job, String workplace, Integer pointsCollected) {
+	public UserDTO(Integer id, String username, String email, String password, String firstName, String lastName, String address, String city, String zipCode, String country, String phoneNumber, Integer jmbg, Gender gender, String job, String workplace, Integer pointsCollected, boolean filledQuestionnaire, boolean accountVerified) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
@@ -52,8 +49,8 @@ public class UserDTO {
 		this.job = job;
 		this.workplace = workplace;
 		this.pointsCollected = pointsCollected;
-		this.filledQuestionnaire = false;
-		this.accountVerified = false;
+		this.filledQuestionnaire = filledQuestionnaire;
+		this.accountVerified = accountVerified;
 	}
 
 	public Integer getId() {
@@ -122,6 +119,11 @@ public class UserDTO {
 
 	public boolean isFilledQuestionnaire() {
 		return filledQuestionnaire;
+	}
+
+	public void setFilledQuestionnaire(boolean filledQuestionnaire) {
+
+		this.filledQuestionnaire = filledQuestionnaire;
 	}
 
 	public boolean isAccountVerified() {
