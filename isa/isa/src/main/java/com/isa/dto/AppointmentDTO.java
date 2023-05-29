@@ -13,11 +13,9 @@ public class AppointmentDTO {
     private String date;
     private FacilityDTO facility;
 
-
     public AppointmentDTO() {
 
     }
-
 
     public AppointmentDTO(Appointments appointments){
         appointmentId = appointments.getAppointmentId();

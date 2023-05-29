@@ -84,8 +84,6 @@ public class AppointmentController {
     public ResponseEntity<AppointmentDTO> saveAppointment(@RequestBody AppointmentDTO appointmentDTO) {
 
 
-
-        // a new exam must have student and course defined
         if (appointmentDTO.getFacility() == null ) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -93,7 +91,7 @@ public class AppointmentController {
         User user = userService.findOne(appointmentDTO.getUser().getId());
         Facility facility = facilityService.findOne(appointmentDTO.getFacility().getCenterId());
 
-        if (user == null || facility == null) {
+        if (facility == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -101,9 +99,9 @@ public class AppointmentController {
         appointments.setAppointmentId(appointmentDTO.getAppointmentId());
         appointments.setDate(appointmentDTO.getDate());
         appointments.setFacility(facility);
-        appointments.setUser(user);
-
-
+        if(user!=null){
+            appointments.setUser(user);
+        }
 
         appointments = appointmentService.save(appointments);
 
