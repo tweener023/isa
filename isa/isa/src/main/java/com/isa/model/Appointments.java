@@ -3,6 +3,7 @@ package com.isa.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -15,7 +16,10 @@ public class Appointments {
 
     @JsonFormat(pattern = "yyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name = "dateOfAppointment", nullable = false)
-    private String date;
+    private Date dateOfAppointment;
+
+    @Column(name = "timeOfAppointment", nullable = false)
+    private LocalTime timeOfAppointment;
 
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -42,12 +46,20 @@ public class Appointments {
         this.user = userId;
     }
 
-    public String getDate() {
-        return date;
+    public Date getDate() {
+        return dateOfAppointment;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate(Date dateOfAppointment) {
+        this.dateOfAppointment = dateOfAppointment;
+    }
+
+    public LocalTime getTimeOfAppointment() {
+        return timeOfAppointment;
+    }
+
+    public void setTimeOfAppointment(LocalTime timeOfAppointment) {
+        this.timeOfAppointment = timeOfAppointment;
     }
 
     public Facility getFacilityName() {

@@ -30,4 +30,8 @@ public class AppointmentService {
     public void remove(Integer id) {
         appointmentRepository.deleteById(id);
     }
+
+    public List<Appointments> getAppointmentsByCenter(Facility center) {
+        return appointmentRepository.findByCenter(center);
+    }
 }

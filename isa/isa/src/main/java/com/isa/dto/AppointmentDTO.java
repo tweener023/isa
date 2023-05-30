@@ -4,13 +4,15 @@ import com.isa.model.Appointments;
 import com.isa.model.Facility;
 import com.isa.model.User;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 public class AppointmentDTO {
 
     private Integer appointmentId;
     private UserDTO user;
-    private String date;
+    private Date dateOfAppointment;
+    private LocalTime timeOfAppointment;
     private FacilityDTO facility;
 
     public AppointmentDTO() {
@@ -20,14 +22,16 @@ public class AppointmentDTO {
     public AppointmentDTO(Appointments appointments){
         appointmentId = appointments.getAppointmentId();
         user = new UserDTO(appointments.getUser());
-        appointments.getDate();
+        dateOfAppointment = appointments.getDate();
+        timeOfAppointment = appointments.getTimeOfAppointment();
         facility = new FacilityDTO(appointments.getFacilityName());
     }
 
-    public AppointmentDTO(Integer appointmentId, UserDTO userId, String date, FacilityDTO facilityName) {
+    public AppointmentDTO(Integer appointmentId, UserDTO userId, Date dateOfAppointment, LocalTime timeOfAppointment, FacilityDTO facilityName) {
         this.appointmentId = appointmentId;
         this.user = userId;
-        this.date = date;
+        this.dateOfAppointment = dateOfAppointment;
+        this.timeOfAppointment = timeOfAppointment;
         this.facility = facilityName;
     }
 
@@ -39,8 +43,8 @@ public class AppointmentDTO {
         return user;
     }
 
-    public String getDate() {
-        return date;
+    public Date getDate() {
+        return dateOfAppointment;
     }
 
     public FacilityDTO getFacility() {
@@ -55,11 +59,19 @@ public class AppointmentDTO {
         this.user = user;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate(Date dateOfAppointment) {
+        this.dateOfAppointment = dateOfAppointment;
     }
 
     public void setFacility(FacilityDTO facility) {
         this.facility = facility;
+    }
+
+    public LocalTime getTimeOfAppointment() {
+        return timeOfAppointment;
+    }
+
+    public void setTimeOfAppointment(LocalTime timeOfAppointment) {
+        this.timeOfAppointment = timeOfAppointment;
     }
 }

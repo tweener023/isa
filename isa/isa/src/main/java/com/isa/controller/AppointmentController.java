@@ -98,6 +98,7 @@ public class AppointmentController {
         Appointments appointments = new Appointments();
         appointments.setAppointmentId(appointmentDTO.getAppointmentId());
         appointments.setDate(appointmentDTO.getDate());
+        appointments.setTimeOfAppointment(appointmentDTO.getTimeOfAppointment());
         appointments.setFacility(facility);
         if(user!=null){
             appointments.setUser(user);
@@ -121,6 +122,7 @@ public class AppointmentController {
 
         appointment.setAppointmentId(appointmentDTO.getAppointmentId());
         appointment.setDate(appointmentDTO.getDate());
+        appointment.setTimeOfAppointment(appointmentDTO.getTimeOfAppointment());
 
         appointment = appointmentService.save(appointment);
         return new ResponseEntity<>(new AppointmentDTO(appointment), HttpStatus.OK);
@@ -155,6 +157,7 @@ public class AppointmentController {
             }
             appointmentDTO.setFacility(new FacilityDTO(e.getFacilityName()));
             appointmentDTO.setDate(e.getDate());
+            appointmentDTO.setTimeOfAppointment(e.getTimeOfAppointment());
 
             appointmentsDTO.add(appointmentDTO);
         }
