@@ -36,7 +36,7 @@ public class TestController {
     }
 
     @GetMapping("/user")
-    @PreAuthorize("hasRole('USER') or hasRole('MEDIC') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('MEDIC') or hasRole('ADMINISTRATOR')")
     public String userAccess() {
         return "User Content.";
     }
@@ -48,7 +48,7 @@ public class TestController {
     }
 
     @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public String adminAccess() {
         return "Admin Board.";
     }
@@ -94,5 +94,6 @@ public class TestController {
 
         return new ResponseEntity<>(appointmentsDTO, HttpStatus.OK);
     }
+
 
 }
