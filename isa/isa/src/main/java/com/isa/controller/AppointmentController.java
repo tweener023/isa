@@ -97,7 +97,7 @@ public class AppointmentController {
 
         Appointments appointments = new Appointments();
         appointments.setAppointmentId(appointmentDTO.getAppointmentId());
-        appointments.setDate(appointmentDTO.getDate());
+        appointments.setDateOfAppointment(appointmentDTO.getDateOfAppointment());
         appointments.setTimeOfAppointment(appointmentDTO.getTimeOfAppointment());
         appointments.setFacility(facility);
         if(user!=null){
@@ -121,7 +121,7 @@ public class AppointmentController {
         }
 
         appointment.setAppointmentId(appointmentDTO.getAppointmentId());
-        appointment.setDate(appointmentDTO.getDate());
+        appointment.setDateOfAppointment(appointmentDTO.getDateOfAppointment());
         appointment.setTimeOfAppointment(appointmentDTO.getTimeOfAppointment());
 
         appointment = appointmentService.save(appointment);
@@ -156,7 +156,7 @@ public class AppointmentController {
                 appointmentDTO.setUser(new UserDTO(e.getUser()));
             }
             appointmentDTO.setFacility(new FacilityDTO(e.getFacilityName()));
-            appointmentDTO.setDate(e.getDate());
+            appointmentDTO.setDateOfAppointment(e.getDateOfAppointment());
             appointmentDTO.setTimeOfAppointment(e.getTimeOfAppointment());
 
             appointmentsDTO.add(appointmentDTO);

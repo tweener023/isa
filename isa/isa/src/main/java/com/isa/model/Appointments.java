@@ -3,6 +3,7 @@ package com.isa.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
@@ -14,9 +15,9 @@ public class Appointments {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer appointmentId;
 
-    @JsonFormat(pattern = "yyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name = "dateOfAppointment", nullable = false)
-    private Date dateOfAppointment;
+    private LocalDate dateOfAppointment;
 
     @Column(name = "timeOfAppointment", nullable = false)
     private LocalTime timeOfAppointment;
@@ -46,11 +47,11 @@ public class Appointments {
         this.user = userId;
     }
 
-    public Date getDate() {
+    public LocalDate getDateOfAppointment() {
         return dateOfAppointment;
     }
 
-    public void setDate(Date dateOfAppointment) {
+    public void setDateOfAppointment(LocalDate dateOfAppointment) {
         this.dateOfAppointment = dateOfAppointment;
     }
 

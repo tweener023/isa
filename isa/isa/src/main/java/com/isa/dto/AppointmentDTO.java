@@ -4,6 +4,8 @@ import com.isa.model.Appointments;
 import com.isa.model.Facility;
 import com.isa.model.User;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -11,7 +13,7 @@ public class AppointmentDTO {
 
     private Integer appointmentId;
     private UserDTO user;
-    private Date dateOfAppointment;
+    private LocalDate dateOfAppointment;
     private LocalTime timeOfAppointment;
     private FacilityDTO facility;
 
@@ -22,12 +24,12 @@ public class AppointmentDTO {
     public AppointmentDTO(Appointments appointments){
         appointmentId = appointments.getAppointmentId();
         user = new UserDTO(appointments.getUser());
-        dateOfAppointment = appointments.getDate();
+        dateOfAppointment = appointments.getDateOfAppointment();
         timeOfAppointment = appointments.getTimeOfAppointment();
         facility = new FacilityDTO(appointments.getFacilityName());
     }
 
-    public AppointmentDTO(Integer appointmentId, UserDTO userId, Date dateOfAppointment, LocalTime timeOfAppointment, FacilityDTO facilityName) {
+    public AppointmentDTO(Integer appointmentId, UserDTO userId, LocalDate dateOfAppointment, LocalTime timeOfAppointment, FacilityDTO facilityName) {
         this.appointmentId = appointmentId;
         this.user = userId;
         this.dateOfAppointment = dateOfAppointment;
@@ -43,8 +45,12 @@ public class AppointmentDTO {
         return user;
     }
 
-    public Date getDate() {
+    public LocalDate getDateOfAppointment() {
         return dateOfAppointment;
+    }
+
+    public void setDateOfAppointment(LocalDate dateOfAppointment) {
+        this.dateOfAppointment = dateOfAppointment;
     }
 
     public FacilityDTO getFacility() {
@@ -59,9 +65,7 @@ public class AppointmentDTO {
         this.user = user;
     }
 
-    public void setDate(Date dateOfAppointment) {
-        this.dateOfAppointment = dateOfAppointment;
-    }
+
 
     public void setFacility(FacilityDTO facility) {
         this.facility = facility;

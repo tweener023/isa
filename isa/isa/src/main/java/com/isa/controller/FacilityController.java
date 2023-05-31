@@ -126,7 +126,7 @@ public class FacilityController {
             appointmentDTO.setAppointmentId(e.getAppointmentId());
             appointmentDTO.setUser(new UserDTO(e.getUser()));
             appointmentDTO.setFacility(new FacilityDTO(e.getFacilityName()));
-            appointmentDTO.setDate(e.getDate());
+            appointmentDTO.setDateOfAppointment(e.getDateOfAppointment());
 
             appointmentsDTO.add(appointmentDTO);
         }
