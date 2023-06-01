@@ -63,7 +63,7 @@ public class QuestionnaireController {
     }
 
     @PostMapping(value = "/submit")
-    @PreAuthorize("hasAnyRole('MEDIC')")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<QuestionnaireDTO> submitQuestionnaire(@RequestBody QuestionnaireDTO questionnaireDTO) {
         // Retrieve the user by user ID from the questionnaire DTO
         User user = userService.findOne(questionnaireDTO.getUserId());
