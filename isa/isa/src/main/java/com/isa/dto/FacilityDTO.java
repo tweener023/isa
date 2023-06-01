@@ -14,6 +14,9 @@ public class FacilityDTO {
     private UserDTO centerAdmins;
     private Integer centerSupplies;
 
+    public FacilityDTO() {
+
+    }
 
     public FacilityDTO(Facility facility) {
         centerId = facility.getCenterId();
