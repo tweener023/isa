@@ -35,10 +35,30 @@ public class QuestionnaireDTO {
     }
 
     public QuestionnaireDTO(Questionnaire questionnaire) {
-        this(questionnaire.getId(), questionnaire.getDateOfQuestionnaire(), questionnaire.getFirstName(), questionnaire.getParentName(), questionnaire.getLastName(), questionnaire.getJmbg(), questionnaire.getDateOfBirth(), questionnaire.getGender(), questionnaire.getAddress(), questionnaire.getCity(), questionnaire.getPhoneNumber(), questionnaire.getWorkplace(), questionnaire.getJob(), questionnaire.getTimesGiven(), questionnaire.getBloodType(), questionnaire.getAccepted(), questionnaire.getDrunkAlcohol(), questionnaire.getHadTattoo(), questionnaire.getDangerousJob(), questionnaire.getDonatedBlood(), questionnaire.getUser());
+        this.id = questionnaire.getId();
+        this.dateOfQuestionnaire = questionnaire.getDateOfQuestionnaire();
+        this.firstName = questionnaire.getFirstName();
+        this.parentName = questionnaire.getParentName();
+        this.lastName = questionnaire.getLastName();
+        this.jmbg = questionnaire.getJmbg();
+        this.dateOfBirth = questionnaire.getDateOfBirth();
+        this.gender = questionnaire.getGender();
+        this.address = questionnaire.getAddress();
+        this.city = questionnaire.getCity();
+        this.phoneNumber = questionnaire.getPhoneNumber();
+        this.workplace = questionnaire.getWorkplace();
+        this.job = questionnaire.getJob();
+        this.timesGiven = questionnaire.getTimesGiven();
+        this.bloodType = questionnaire.getBloodType();
+        this.drunkAlcohol = questionnaire.getDrunkAlcohol();
+        this.hadTattoo = questionnaire.getHadTattoo();
+        this.dangerousJob = questionnaire.getDangerousJob();
+        this.donatedBlood = questionnaire.getDonatedBlood();
+        this.accepted = !donatedBlood && !hadTattoo && !drunkAlcohol;
+        this.userId = questionnaire.getUser().getId();
     }
 
-    public QuestionnaireDTO(Integer id, Date dateOfQuestionnaire, String firstName, String parentName, String lastName, Integer jmbg, Date dateOfBirth, Gender gender, String address, String city, String phoneNumber, String workplace, String job, Integer timesGiven, BloodType bloodType, Boolean accepted, Boolean drunkAlcohol, Boolean hadTattoo, Boolean dangerousJob, Boolean donatedBlood, User user) {
+    public QuestionnaireDTO(Integer id, Date dateOfQuestionnaire, String firstName, String parentName, String lastName, Integer jmbg, Date dateOfBirth, Gender gender, String address, String city, String phoneNumber, String workplace, String job, Integer timesGiven, BloodType bloodType, Boolean drunkAlcohol, Boolean hadTattoo, Boolean dangerousJob, Boolean donatedBlood, User user) {
         this.id = id;
         this.dateOfQuestionnaire = dateOfQuestionnaire;
         this.firstName = firstName;
@@ -54,7 +74,7 @@ public class QuestionnaireDTO {
         this.job = job;
         this.timesGiven = timesGiven;
         this.bloodType = bloodType;
-        this.accepted = accepted;
+        this.accepted = !donatedBlood && !hadTattoo && !drunkAlcohol;
         this.drunkAlcohol = drunkAlcohol;
         this.hadTattoo = hadTattoo;
         this.dangerousJob = dangerousJob;

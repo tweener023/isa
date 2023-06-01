@@ -129,7 +129,7 @@ public class AuthController {
     }
 
     private boolean isValidZipCode(String zipCode) {
-        String regex = "^\\d{5}$"; // Regex pattern for 5-digit zip code
+        String regex = "^\\d{5}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(zipCode);
         return matcher.matches();

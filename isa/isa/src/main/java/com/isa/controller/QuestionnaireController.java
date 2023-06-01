@@ -221,39 +221,38 @@ public class QuestionnaireController {
         }
 
         // Create a new Questionnaire object from the questionnaire DTO
-        Questionnaire questionnaire = new Questionnaire();
-        questionnaire.setDateOfQuestionnaire(questionnaireDTO.getDateOfQuestionnaire());
-        questionnaire.setFirstName(questionnaireDTO.getFirstName());
-        questionnaire.setParentName(questionnaireDTO.getParentName());
-        questionnaire.setLastName(questionnaireDTO.getLastName());
-        questionnaire.setJmbg(questionnaireDTO.getJmbg());
-        questionnaire.setDateOfBirth(questionnaireDTO.getDateOfBirth());
-        questionnaire.setGender(questionnaireDTO.getGender());
-        questionnaire.setAddress(questionnaireDTO.getAddress());
-        questionnaire.setCity(questionnaireDTO.getCity());
-        questionnaire.setPhoneNumber(questionnaireDTO.getPhoneNumber());
-        questionnaire.setWorkplace(questionnaireDTO.getWorkplace());
-        questionnaire.setJob(questionnaireDTO.getJob());
-        questionnaire.setTimesGiven(questionnaireDTO.getTimesGiven());
-        questionnaire.setBloodType(questionnaireDTO.getBloodType());
-        questionnaire.setAccepted(questionnaireDTO.getAccepted());
-        questionnaire.setDrunkAlcohol(questionnaireDTO.getDrunkAlcohol());
-        questionnaire.setHadTattoo(questionnaireDTO.getHadTattoo());
-        questionnaire.setDangerousJob(questionnaireDTO.getDangerousJob());
-        questionnaire.setDonatedBlood(questionnaireDTO.getDonatedBlood());
-        questionnaire.setUser(user);
+        Questionnaire questionnaire = new Questionnaire(
+                questionnaireDTO.getDateOfQuestionnaire(),
+                questionnaireDTO.getFirstName(),
+                questionnaireDTO.getParentName(),
+                questionnaireDTO.getLastName(),
+                questionnaireDTO.getJmbg(),
+                questionnaireDTO.getDateOfBirth(),
+                questionnaireDTO.getGender(),
+                questionnaireDTO.getAddress(),
+                questionnaireDTO.getCity(),
+                questionnaireDTO.getPhoneNumber(),
+                questionnaireDTO.getWorkplace(),
+                questionnaireDTO.getJob(),
+                questionnaireDTO.getTimesGiven(),
+                questionnaireDTO.getBloodType(),
+                questionnaireDTO.getDrunkAlcohol(),
+                questionnaireDTO.getHadTattoo(),
+                questionnaireDTO.getDangerousJob(),
+                questionnaireDTO.getDonatedBlood(),
+                userService.findOne(questionnaireDTO.getUserId())
+        );
 
-        // Save the questionnaire
+        questionnaire.setAccepted(!questionnaire.getDonatedBlood() && !questionnaire.getHadTattoo() && !questionnaire.getDrunkAlcohol());
+
         questionnaireService.save(questionnaire);
 
-        // Update the user's filledQuestionnaire field to true
         user.setFilledQuestionnaire(true);
         userService.save(user);
 
         UserDTO userDTO = new UserDTO(user);
         userDTO.setFilledQuestionnaire(true);
 
-        // Create and return the response DTO
         QuestionnaireDTO responseDTO = new QuestionnaireDTO(questionnaire);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -283,13 +282,13 @@ public class QuestionnaireController {
         existingQuestionnaire.setJob(updatedQuestionnaireDTO.getJob());
         existingQuestionnaire.setTimesGiven(updatedQuestionnaireDTO.getTimesGiven());
         existingQuestionnaire.setBloodType(updatedQuestionnaireDTO.getBloodType());
-        existingQuestionnaire.setAccepted(updatedQuestionnaireDTO.getAccepted());
         existingQuestionnaire.setDrunkAlcohol(updatedQuestionnaireDTO.getDrunkAlcohol());
         existingQuestionnaire.setHadTattoo(updatedQuestionnaireDTO.getHadTattoo());
         existingQuestionnaire.setDangerousJob(updatedQuestionnaireDTO.getDangerousJob());
         existingQuestionnaire.setDonatedBlood(updatedQuestionnaireDTO.getDonatedBlood());
 
-        // Save the updated questionnaire
+        existingQuestionnaire.setAccepted(!existingQuestionnaire.getDonatedBlood() && !existingQuestionnaire.getHadTattoo() && !existingQuestionnaire.getDrunkAlcohol());
+
         questionnaireService.save(existingQuestionnaire);
 
         // Create and return the response DTO

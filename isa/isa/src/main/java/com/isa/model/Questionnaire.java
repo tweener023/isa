@@ -77,7 +77,7 @@ public class Questionnaire {
         super();
     }
 
-    public Questionnaire(Date dateOfQuestionnaire, String firstName, String parentName, String lastName, Integer jmbg, Date dateOfBirth, Gender gender, String address, String city, String phoneNumber, String workplace, String job, Integer timesGiven, BloodType bloodType, Boolean accepted, Boolean drunkAlcohol, Boolean hadTattoo, Boolean dangerousJob, Boolean donatedBlood, User user) {
+    public Questionnaire(Date dateOfQuestionnaire, String firstName, String parentName, String lastName, Integer jmbg, Date dateOfBirth, Gender gender, String address, String city, String phoneNumber, String workplace, String job, Integer timesGiven, BloodType bloodType, Boolean drunkAlcohol, Boolean hadTattoo, Boolean dangerousJob, Boolean donatedBlood, User user) {
         this.dateOfQuestionnaire = dateOfQuestionnaire;
         this.firstName = firstName;
         this.parentName = parentName;
@@ -92,12 +92,17 @@ public class Questionnaire {
         this.job = job;
         this.timesGiven = timesGiven;
         this.bloodType = bloodType;
-        this.accepted = accepted;
         this.drunkAlcohol = drunkAlcohol;
         this.hadTattoo = hadTattoo;
         this.dangerousJob = dangerousJob;
         this.donatedBlood = donatedBlood;
         this.user = user;
+
+        if (!donatedBlood && !hadTattoo && !drunkAlcohol) {
+            this.accepted = true;
+        } else {
+            this.accepted = false;
+        }
     }
 
     public Integer getId() {
@@ -221,11 +226,19 @@ public class Questionnaire {
     }
 
     public Boolean getAccepted() {
-        return accepted;
+        if (!donatedBlood && !hadTattoo && !drunkAlcohol) {
+            return accepted;
+        } else {
+            return false;
+        }
     }
 
     public void setAccepted(Boolean accepted) {
-        this.accepted = accepted;
+        if (!donatedBlood && !hadTattoo && !drunkAlcohol) {
+            this.accepted = accepted;
+        } else {
+            this.accepted = false;
+        }
     }
 
     public Boolean getDrunkAlcohol() {
