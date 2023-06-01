@@ -64,6 +64,8 @@ public class UserController {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
+
+
 	@GetMapping(value = "/all")
 	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<List<UserDTO>> getAllUsers() {

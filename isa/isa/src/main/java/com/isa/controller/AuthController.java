@@ -1,6 +1,7 @@
 package com.isa.controller;
 
 import com.isa.model.ERole;
+import com.isa.model.Gender;
 import com.isa.model.Role;
 import com.isa.model.User;
 import com.isa.payload.request.LoginRequest;
@@ -27,6 +28,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -53,6 +56,98 @@ public class AuthController {
 
     @Autowired
     private EmailService emailService;
+
+    private boolean isValidName(String name) {
+        String regex = "^[A-Z][a-z]*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(name);
+        return matcher.matches();
+    }
+
+    private boolean isValidAddress(String address) {
+        String regex = "^[a-zA-Z0-9\\s,.-]*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(address);
+        return matcher.matches();
+    }
+
+    private boolean isValidCityName(String cityName) {
+        String regex = "^(?:[A-Z][a-z]*)(?:\\s[A-Z][a-z]*)*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(cityName);
+        return matcher.matches();
+    }
+
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        String regex = "^[0-9]{3}[-\\s]?[0-9]{3}[-\\s]?[0-9]{4}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(phoneNumber);
+        return matcher.matches();
+    }
+
+    private boolean isValidJMBG(String jmbg) {
+        String regex = "^[0-9]{8}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(jmbg);
+        return matcher.matches();
+    }
+
+    private boolean isValidGender(Gender gender) {
+        String genderStr = gender.toString().toUpperCase();
+        String regex = "^(MALE|FEMALE)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(genderStr);
+        return matcher.matches();
+    }
+
+    private boolean isValidWorkplace(String workplace) {
+        String regex = "^[a-zA-Z0-9\\s.,'-]*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(workplace);
+        return matcher.matches();
+    }
+
+    private boolean isValidJob(String job) {
+        String regex = "^[a-zA-Z\\s.,'-]*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(job);
+        return matcher.matches();
+    }
+
+    private boolean isValidPointsCollected(String number) {
+        String regex = "^(0|[1-9]\\d*)$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(number);
+        return matcher.matches();
+    }
+
+    private boolean isValidCountry(String country) {
+        String regex = "^(?:[A-Z][a-z]*)(?:\\s[A-Z][a-z]*)*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(country);
+        return matcher.matches();
+    }
+
+    private boolean isValidZipCode(String zipCode) {
+        String regex = "^\\d{5}$"; // Regex pattern for 5-digit zip code
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(zipCode);
+        return matcher.matches();
+    }
+
+    private boolean isValidUsername(String username) {
+        String regex = "^[a-zA-Z0-9_]{3,20}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(username);
+        return matcher.matches();
+    }
+
+    private boolean isValidEmail(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -108,6 +203,97 @@ public class AuthController {
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
+
+        if (!isValidName(signupRequest.getFirstName())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid first name!"));
+        }
+
+        if (!isValidName(signupRequest.getLastName())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid last name!"));
+        }
+
+        if (!isValidAddress(signupRequest.getAddress())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid address!"));
+        }
+
+        if (!isValidCityName(signupRequest.getCity())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid city name!"));
+        }
+
+        if (!isValidPhoneNumber(signupRequest.getPhoneNumber())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid phone number!"));
+        }
+
+        if (!isValidGender(signupRequest.getGender())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid gender!"));
+        }
+
+        if (!isValidWorkplace(signupRequest.getWorkplace())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid workplace!"));
+        }
+
+        if (!isValidJob(signupRequest.getJob())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid job!"));
+        }
+
+        if (!isValidCountry(signupRequest.getCountry())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid country!"));
+        }
+
+        if (!isValidUsername(signupRequest.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid username!"));
+        }
+
+        if (!isValidEmail(signupRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid email!"));
+        }
+
+        String jmbgString = String.valueOf(signupRequest.getJmbg());
+
+        if (!isValidJMBG(jmbgString)) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid JMBG!"));
+        }
+
+        String pointsCollectedString = String.valueOf(signupRequest.getPointsCollected());
+
+        if (!isValidPointsCollected(pointsCollectedString)) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid points collected!"));
+        }
+
+        String zipCodeString = String.valueOf(signupRequest.getZipCode());
+
+        if (!isValidZipCode(zipCodeString)) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Invalid zip code!"));
+        }
+
 
         User user = new User(signupRequest.getUsername(),
                             signupRequest.getEmail(),

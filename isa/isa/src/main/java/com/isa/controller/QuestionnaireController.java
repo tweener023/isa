@@ -53,7 +53,7 @@ public class QuestionnaireController {
     }
 
     private boolean isValidGender(Gender gender) {
-        String genderStr = gender.toString();
+        String genderStr = gender.toString().toUpperCase();
         String regex = "^(MALE|FEMALE)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(genderStr);
