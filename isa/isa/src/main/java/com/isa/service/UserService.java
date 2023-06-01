@@ -2,6 +2,7 @@ package com.isa.service;
 
 import java.util.List;
 
+import com.isa.model.Appointments;
 import com.isa.model.User;
 import com.isa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,12 @@ public class UserService {
 	}
 
 	public void questionnaireIsFilled(Integer jmbg) { userRepository.questionnaireIsFilled(jmbg);}
+
+	public void addAppointmentToUser(Integer userId, Appointments appointment) {
+		User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+
+		user.getAppointments().add(appointment);
+		userRepository.save(user);
+	}
 	
 	}

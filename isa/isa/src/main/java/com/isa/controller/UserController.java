@@ -8,6 +8,7 @@ import com.isa.dto.AppointmentDTO;
 import com.isa.dto.FacilityDTO;
 import com.isa.model.Appointments;
 import com.isa.model.Facility;
+import com.isa.service.AppointmentService;
 import com.isa.service.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,9 @@ public class UserController {
 
 	@Autowired
 	FacilityService facilityService;
+
+	@Autowired
+	AppointmentService appointmentService;
 
 	@GetMapping(value = "/all")
 	public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -215,6 +219,34 @@ public class UserController {
 		FacilityDTO facilityDTO = new FacilityDTO(facility);
 
 		return new ResponseEntity<>(facilityDTO, HttpStatus.OK);
+	}
+
+	@PutMapping(value = "/{userId}/appointments", consumes = "application/json")
+	public ResponseEntity<UserDTO> addAppointmentToUser(@PathVariable Integer userId, @RequestBody AppointmentDTO appointmentDTO) {
+
+		User user = userService.findOne(userId);
+
+		if (user == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		// Find the existing appointment by its ID
+		Appointments appointment = appointmentService.findOne(appointmentDTO.getAppointmentId());
+
+		if (appointment == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		// Set the user for the appointment
+		appointment.setUser(user);
+
+		// Add the appointment to the user's appointments set
+		user.getAppointments().add(appointment);
+
+		// Save the updated user
+		user = userService.save(user);
+
+		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 	}
 
 
