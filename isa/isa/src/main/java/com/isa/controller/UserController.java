@@ -276,6 +276,13 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
+		boolean hasAppointmentFromSameFacility = user.getAppointments().stream()
+				.anyMatch(a -> a.getFacilityName().getCenterId().equals(appointment.getFacilityName().getCenterId()));
+
+		if (hasAppointmentFromSameFacility) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+
 		// Set the user for the appointment
 		appointment.setUser(user);
 

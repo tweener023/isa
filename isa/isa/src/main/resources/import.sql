@@ -27,14 +27,14 @@ insert into facility ( user_id, center_name, center_address, center_description,
 insert into facility ( user_id, center_name, center_address, center_description, center_supplies) values (9,'Klinicki centar AAAA', 'AAAA 16', 'ovo je opis za kcv', 13);
 
 
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (1,1, '2020-08-09', '10:30:00');
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (1,1, '2021-01-09', '11:00:00');
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (1,1, '2021-08-09', '11:30:00');
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (2,2, '2021-08-09', '12:00:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,1, '2020-08-09', '10:30:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,1, '2021-01-09', '11:00:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,1, '2021-08-09', '11:30:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,2, '2021-08-09', '12:00:00');
 
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (2,2, '2021-08-09', '13:30:00');
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (3,3, '2021-08-09', '14:00:00');
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (4,4, '2021-08-09', '15:00:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,2, '2021-08-09', '13:30:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,3, '2021-08-09', '14:00:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,4, '2021-08-09', '15:00:00');
 
 insert into roles ( name ) values ('ROLE_USER');
 insert into roles ( name ) values ('ROLE_MEDIC');
