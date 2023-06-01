@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class FacilityController {
 
      */
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<FacilityDTO> getFacility(@PathVariable Integer id) {
 
         Facility facility = facilityService.findOne(id);
@@ -64,6 +66,7 @@ public class FacilityController {
     }
 
     @PostMapping(consumes = "application/json")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<FacilityDTO> saveFacility(@RequestBody FacilityDTO facilityDTO) {
 
         User user = userService.findOne(facilityDTO.getCenterAdmins().getId());
@@ -82,6 +85,7 @@ public class FacilityController {
 
 
     @PutMapping(consumes = "application/json")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<FacilityDTO> updateFacility(@RequestBody FacilityDTO facilityDTO) {
 
         // a facility must exist
@@ -104,6 +108,7 @@ public class FacilityController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<Void> deleteFacility(@PathVariable Integer id) {
 
         Facility facility = facilityService.findOne(id);
@@ -117,6 +122,7 @@ public class FacilityController {
     }
 
     @GetMapping(value = "/{studentId}")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<List<AppointmentDTO>> getUserAppointments(@PathVariable Integer userId) {
         User user = userService.findOne(userId);
         Set<Appointments> appointments = user.getAppointments();

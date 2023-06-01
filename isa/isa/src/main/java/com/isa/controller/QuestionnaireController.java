@@ -9,6 +9,7 @@ import com.isa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class QuestionnaireController {
     private UserService userService;
 
     @GetMapping(value = "/all")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<List<QuestionnaireDTO>> getAllQuestionnaires() {
 
         List<Questionnaire> questionnaires = questionnaireService.findAll();
@@ -38,6 +40,7 @@ public class QuestionnaireController {
     }
 
     @PutMapping(value = "/connect")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<String> connectUserAndQuestionnaire(@RequestParam("userId") Integer userId, @RequestParam("questionnaireId") Integer questionnaireId) {
         User user = userService.findOne(userId);
         Questionnaire questionnaire = questionnaireService.findOne(questionnaireId);
@@ -60,6 +63,7 @@ public class QuestionnaireController {
     }
 
     @PostMapping(value = "/submit")
+    @PreAuthorize("hasAnyRole('MEDIC')")
     public ResponseEntity<QuestionnaireDTO> submitQuestionnaire(@RequestBody QuestionnaireDTO questionnaireDTO) {
         // Retrieve the user by user ID from the questionnaire DTO
         User user = userService.findOne(questionnaireDTO.getUserId());
@@ -107,6 +111,7 @@ public class QuestionnaireController {
     }
 
     @PutMapping(value = "/update/{questionnaireId}")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<QuestionnaireDTO> updateQuestionnaire(@PathVariable("questionnaireId") Integer questionnaireId, @RequestBody QuestionnaireDTO updatedQuestionnaireDTO) {
         // Retrieve the existing questionnaire from the database
         Questionnaire existingQuestionnaire = questionnaireService.findOne(questionnaireId);

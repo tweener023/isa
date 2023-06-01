@@ -28,6 +28,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,6 +65,7 @@ public class UserController {
 	private JavaMailSender javaMailSender;
 
 	@GetMapping(value = "/all")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<List<UserDTO>> getAllUsers() {
 
 		List<User> users = userService.findAll();
@@ -79,6 +81,7 @@ public class UserController {
 
 	// GET /api/users?page=0&size=5&sort=firstName,DESC
 	@GetMapping
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<List<UserDTO>> getusersPage(Pageable page) {
 
 		// page object holds data about pagination and sorting
@@ -95,6 +98,7 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/{id}")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<UserDTO> getUser(@PathVariable Integer id) {
 
 		User user = userService.findOne(id);
@@ -108,6 +112,7 @@ public class UserController {
 	}
 
 	@PostMapping(consumes = "application/json")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
 
 		User user = new User();
@@ -133,6 +138,7 @@ public class UserController {
 	}
 
 	@PutMapping(consumes = "application/json")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
 
 		// a user must exist
@@ -163,6 +169,7 @@ public class UserController {
 	}
 
 	@DeleteMapping(value = "/{id}")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
 
 		User user = userService.findOne(id);
@@ -176,6 +183,7 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/findByEmail")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
 
 		User user = userService.findByEmail(email);
@@ -186,6 +194,7 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/findLastName")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<List<UserDTO>> getUsersByLastName(@RequestParam String lastName) {
 
 		List<User> users = userService.findByLastName(lastName);
@@ -199,6 +208,7 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/prezime")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<List<UserDTO>> pronadjiUserePoPrezimenu(@RequestParam String lastName) {
 
 		List<User> users = userService.pronadjiPoPrezimenu(lastName);
@@ -212,6 +222,7 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/findFirstLast")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<List<UserDTO>> getUsersByFirstNameAndLastName(@RequestParam String firstName,
 			@RequestParam String lastName) {
 
@@ -227,6 +238,7 @@ public class UserController {
 
 
 	@GetMapping(value = "facility/{userId}")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<FacilityDTO> getFacilityAdmin(@PathVariable Integer userId) {
 		User user = userService.findOne(userId);
 
@@ -246,6 +258,7 @@ public class UserController {
 	}
 
 	@PutMapping(value = "/{userId}/appointments", consumes = "application/json")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
 	public ResponseEntity<UserDTO> addAppointmentToUser(@PathVariable Integer userId, @RequestBody AppointmentDTO appointmentDTO) {
 
 		User user = userService.findOne(userId);

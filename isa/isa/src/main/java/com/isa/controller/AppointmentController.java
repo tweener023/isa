@@ -12,6 +12,7 @@ import com.isa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,7 @@ public class AppointmentController {
     FacilityService facilityService;
 
     @GetMapping(value = "/all")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<List<AppointmentDTO>> getAllAppointments(){
         List <Appointments> appointment = appointmentService.findAll();
 
@@ -68,6 +70,7 @@ public class AppointmentController {
 
      */
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<AppointmentDTO> getAppointment(@PathVariable Integer id) {
 
         Appointments appointment = appointmentService.findOne(id);
@@ -81,6 +84,7 @@ public class AppointmentController {
     }
 
     @PostMapping(consumes = "application/json")
+    @PreAuthorize("hasRole('MEDIC')")
     public ResponseEntity<AppointmentDTO> saveAppointment(@RequestBody AppointmentDTO appointmentDTO) {
 
 
@@ -111,6 +115,7 @@ public class AppointmentController {
 
 
     @PutMapping(consumes = "application/json")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<AppointmentDTO> updateAppointment(@RequestBody AppointmentDTO appointmentDTO) {
 
         // a appointment must exist
@@ -129,6 +134,7 @@ public class AppointmentController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<Void> deleteAppointment(@PathVariable Integer id) {
 
         Appointments appointment = appointmentService.findOne(id);
@@ -142,6 +148,7 @@ public class AppointmentController {
     }
 
     @GetMapping(value = "facility/{centerId}")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public ResponseEntity<List<AppointmentDTO>> getFacilityAppointments(@PathVariable Integer centerId) {
         Facility facility = facilityService.findOne(centerId);

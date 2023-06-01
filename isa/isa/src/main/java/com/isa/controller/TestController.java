@@ -67,6 +67,7 @@ public class TestController {
     }
 
     @GetMapping(value = "/appointments/all")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
         List <Appointments> appointments = appointmentService.findAll();
 
@@ -79,6 +80,7 @@ public class TestController {
     }
 
     @GetMapping(value = "/appointments/byCenter/{centerId}")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<List<AppointmentDTO>> getAppointmentsByCenter(@PathVariable Integer centerId) {
         Facility center = facilityService.findOne(centerId);
         if (center == null) {
