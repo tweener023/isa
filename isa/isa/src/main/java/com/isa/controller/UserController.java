@@ -1,26 +1,44 @@
 package com.isa.controller;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.isa.dto.AppointmentDTO;
 import com.isa.dto.FacilityDTO;
 import com.isa.model.Appointments;
 import com.isa.model.Facility;
 import com.isa.service.AppointmentService;
+import com.isa.service.EmailService;
 import com.isa.service.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.isa.dto.UserDTO;
 import com.isa.model.User;
 import com.isa.service.UserService;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import java.awt.Color;
 
 @RestController
 @CrossOrigin
@@ -38,6 +56,12 @@ public class UserController {
 
 	@Autowired
 	AppointmentService appointmentService;
+
+	@Autowired
+	private EmailService emailService;
+
+	@Autowired
+	private JavaMailSender javaMailSender;
 
 	@GetMapping(value = "/all")
 	public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -246,7 +270,85 @@ public class UserController {
 		// Save the updated user
 		user = userService.save(user);
 
+		// Generate the QR code image
+		String qrCodeText = "Appointment ID: " + appointment.getAppointmentId()
+				+ "\n Facility: " + appointment.getFacilityName().getCenterName()
+				+ "\n Date: " + appointment.getDateOfAppointment()
+				+ "\n Time: " + appointment.getTimeOfAppointment();
+		int qrCodeWidth = 200;
+		int qrCodeHeight = 200;
+		String qrCodeImageBase64;
+		try {
+			qrCodeImageBase64 = generateQRCodeImage(qrCodeText, qrCodeWidth, qrCodeHeight);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		// Update the email text without the <img> tag
+		String text = "Your appointment details:\n"
+				+ "Date: " + appointment.getDateOfAppointment() + "\n"
+				+ "Time: " + appointment.getTimeOfAppointment() + "\n"
+				+ "Facility: " + appointment.getFacilityName().getCenterName();
+
+		// Send the email with the appointment details and QR code image as an attachment
+		sendAppointmentConfirmationEmail(user.getEmail(), "Appointment Confirmation", text, qrCodeImageBase64);
+
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+	}
+
+	private void sendAppointmentConfirmationEmail(String to, String subject, String text, String qrCodeImageBase64) {
+		MimeMessage message = javaMailSender.createMimeMessage();
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			helper.setTo(to);
+			helper.setSubject(subject);
+			helper.setText(text, true);
+
+			// Add the QR code image as an attachment
+			byte[] imageBytes = Base64.getDecoder().decode(qrCodeImageBase64);
+			helper.addAttachment("qr_code.png", new ByteArrayResource(imageBytes), "image/png");
+
+			javaMailSender.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String generateQRCodeImage(String text, int width, int height) throws IOException {
+		QRCodeWriter qrCodeWriter = new QRCodeWriter();
+		try {
+			BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+
+			BufferedImage qrCodeImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+			qrCodeImage.createGraphics();
+
+			Graphics2D graphics = (Graphics2D) qrCodeImage.getGraphics();
+			graphics.setColor(Color.WHITE);
+			graphics.fillRect(0, 0, width, height);
+			graphics.setColor(Color.BLACK);
+
+			for (int i = 0; i < width; i++) {
+				for (int j = 0; j < height; j++) {
+					if (bitMatrix.get(i, j)) {
+						graphics.fillRect(i, j, 1, 1);
+					}
+				}
+			}
+
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			javax.imageio.ImageIO.write(qrCodeImage, "png", baos);
+			baos.flush();
+			byte[] imageBytes = baos.toByteArray();
+			baos.close();
+
+			// Convert the byte array to a Base64-encoded string
+			String qrCodeImageBase64 = Base64.getEncoder().encodeToString(imageBytes);
+
+			return qrCodeImageBase64;
+		} catch (com.google.zxing.WriterException e) {
+			throw new IOException("Error generating QR code image", e);
+		}
 	}
 
 
