@@ -17,6 +17,7 @@ import com.isa.dto.AppointmentDTO;
 import com.isa.dto.FacilityDTO;
 import com.isa.model.Appointments;
 import com.isa.model.Facility;
+import com.isa.model.Questionnaire;
 import com.isa.service.AppointmentService;
 import com.isa.service.EmailService;
 import com.isa.service.FacilityService;
@@ -268,12 +269,15 @@ public class UserController {
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
-		// Find the existing appointment by its ID
+		
 		Appointments appointment = appointmentService.findOne(appointmentDTO.getAppointmentId());
 
 		if (appointment == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		if (appointment.getUser().getId() != 5) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		}
 
 		boolean hasAppointmentFromSameFacility = user.getAppointments().stream()
