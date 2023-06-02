@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface QuestionnaireRepository extends JpaRepository<Questionnaire, Integer> {
     Optional<Questionnaire> findById(String id);
 
-    Questionnaire findByUser(Integer id);
+    Questionnaire findByUser(User user);
 }

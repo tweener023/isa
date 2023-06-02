@@ -18,9 +18,7 @@ import com.isa.dto.FacilityDTO;
 import com.isa.model.Appointments;
 import com.isa.model.Facility;
 import com.isa.model.Questionnaire;
-import com.isa.service.AppointmentService;
-import com.isa.service.EmailService;
-import com.isa.service.FacilityService;
+import com.isa.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -35,7 +33,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.isa.dto.UserDTO;
 import com.isa.model.User;
-import com.isa.service.UserService;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -58,6 +55,9 @@ public class UserController {
 
 	@Autowired
 	AppointmentService appointmentService;
+
+	@Autowired
+	QuestionnaireService questionnaireService;
 
 	@Autowired
 	private EmailService emailService;
@@ -269,7 +269,17 @@ public class UserController {
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
+
+		if (user.isFilledQuestionnaire() == false) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+
+		Questionnaire questionnaire = questionnaireService.findByUser(user);
+
+		if (questionnaire.getAccepted() == false) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+
 		Appointments appointment = appointmentService.findOne(appointmentDTO.getAppointmentId());
 
 		if (appointment == null) {

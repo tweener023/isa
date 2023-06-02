@@ -1,6 +1,7 @@
 package com.isa.service;
 
 import com.isa.model.Questionnaire;
+import com.isa.model.User;
 import com.isa.repository.QuestionnaireRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class QuestionnaireService {
 
     public List<Questionnaire> findAll() { return questionnaireRepository.findAll();}
 
-    public Questionnaire findByUser(Integer id) { return questionnaireRepository.findByUser(id);}
+    public Questionnaire findByUser(User user) { return questionnaireRepository.findByUser(user);}
 
     public Questionnaire save(Questionnaire questionnaire) { return questionnaireRepository.save(questionnaire); }
 }
