@@ -155,6 +155,7 @@ public class QuestionnaireController {
         String dateStr1 = dateFormat.format(questionnaireDTO.getDateOfQuestionnaire());
         String dateStr2 = dateFormat.format(questionnaireDTO.getDateOfBirth());
 
+
         if (!isValidDate(dateStr1)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -213,14 +214,16 @@ public class QuestionnaireController {
         if (!isValidTimesGiven(Integer.toString(questionnaireDTO.getTimesGiven()))) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        // Retrieve the user by user ID from the questionnaire DTO
         User user = userService.findOne(questionnaireDTO.getUserId());
 
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        // Create a new Questionnaire object from the questionnaire DTO
+        if (user.isFilledQuestionnaire()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
         Questionnaire questionnaire = new Questionnaire(
                 questionnaireDTO.getDateOfQuestionnaire(),
                 questionnaireDTO.getFirstName(),
@@ -260,14 +263,12 @@ public class QuestionnaireController {
     @PutMapping(value = "/update/{questionnaireId}")
     @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<QuestionnaireDTO> updateQuestionnaire(@PathVariable("questionnaireId") Integer questionnaireId, @RequestBody QuestionnaireDTO updatedQuestionnaireDTO) {
-        // Retrieve the existing questionnaire from the database
         Questionnaire existingQuestionnaire = questionnaireService.findOne(questionnaireId);
 
         if (existingQuestionnaire == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // Update the fields of the existing questionnaire with the new values from the updatedQuestionnaireDTO
         existingQuestionnaire.setDateOfQuestionnaire(updatedQuestionnaireDTO.getDateOfQuestionnaire());
         existingQuestionnaire.setFirstName(updatedQuestionnaireDTO.getFirstName());
         existingQuestionnaire.setParentName(updatedQuestionnaireDTO.getParentName());
@@ -291,7 +292,6 @@ public class QuestionnaireController {
 
         questionnaireService.save(existingQuestionnaire);
 
-        // Create and return the response DTO
         QuestionnaireDTO responseDTO = new QuestionnaireDTO(existingQuestionnaire);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

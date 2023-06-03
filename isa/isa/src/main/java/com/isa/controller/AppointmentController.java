@@ -82,7 +82,6 @@ public class AppointmentController {
 
         Appointments appointment = appointmentService.findOne(id);
 
-        // facility must exist
         if (appointment == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -125,7 +124,6 @@ public class AppointmentController {
     @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<AppointmentDTO> updateAppointment(@RequestBody AppointmentDTO appointmentDTO) {
 
-        // a appointment must exist
         Appointments appointment = appointmentService.findOne(appointmentDTO.getAppointmentId());
 
         if (appointment == null) {
@@ -226,8 +224,6 @@ public class AppointmentController {
             LocalDate appointmentDate = appointment.getDateOfAppointment();
             LocalTime appointmentTime = appointment.getTimeOfAppointment();
 
-            // Check if the appointment's date is after the current date
-            // or if the appointment's date is the current date but the time is after the current time
             if (appointmentDate.isAfter(currentDate) || (appointmentDate.equals(currentDate) && appointmentTime.isAfter(currentTime))) {
                 AppointmentDTO appointmentDTO = new AppointmentDTO(appointment);
                 appointmentsDTO.add(appointmentDTO);
@@ -238,6 +234,7 @@ public class AppointmentController {
     }
 
     @PutMapping("/{appointmentId}/user")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<String> updateAppointmentUser(@PathVariable Integer appointmentId) {
         appointmentService.updateAppointmentUser(appointmentId);
         return ResponseEntity.ok("Appointment user updated successfully.");

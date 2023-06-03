@@ -297,13 +297,10 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 
-		// Set the user for the appointment
 		appointment.setUser(user);
 
-		// Add the appointment to the user's appointments set
 		user.getAppointments().add(appointment);
 
-		// Save the updated user
 		user = userService.save(user);
 
 		// Generate the QR code image
@@ -321,7 +318,6 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		// Update the email text without the <img> tag
 		String text = "Your appointment details:\n"
 				+ "Date: " + appointment.getDateOfAppointment() + "\n"
 				+ "Time: " + appointment.getTimeOfAppointment() + "\n"

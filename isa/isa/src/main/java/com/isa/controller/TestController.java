@@ -57,7 +57,6 @@ public class TestController {
     public ResponseEntity<List<FacilityDTO>> getAllFacilities(){
         List <Facility> facilities = facilityService.findAll();
 
-        //convert facilities to dtos
         List<FacilityDTO> facilitiesDTO = new ArrayList<>();
         for(Facility f : facilities){
             facilitiesDTO.add(new FacilityDTO(f));
