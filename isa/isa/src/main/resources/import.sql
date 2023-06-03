@@ -35,6 +35,9 @@ insert into appointments ( user_id, center_id, date_of_appointment, time_of_appo
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,2, '2021-08-09', '13:30:00');
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,3, '2021-08-09', '14:00:00');
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,4, '2021-08-09', '15:00:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,1, '2023-06-09', '10:30:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,3, '2023-02-09', '10:30:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,2, '2023-08-09', '10:30:00');
 
 insert into roles ( name ) values ('ROLE_USER');
 insert into roles ( name ) values ('ROLE_MEDIC');

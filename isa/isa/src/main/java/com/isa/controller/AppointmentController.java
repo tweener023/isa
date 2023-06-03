@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -171,4 +173,63 @@ public class AppointmentController {
 
         return new ResponseEntity<>(appointmentsDTO, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/userPast/{userId}")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
+    public ResponseEntity<List<AppointmentDTO>> getUserPastAppointments(@PathVariable Integer userId) {
+        User user = userService.findOne(userId);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Set<Appointments> appointments = user.getAppointments();
+        List<AppointmentDTO> appointmentsDTO = new ArrayList<>();
+
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+
+        for (Appointments appointment : appointments) {
+            LocalDate appointmentDate = appointment.getDateOfAppointment();
+            LocalTime appointmentTime = appointment.getTimeOfAppointment();
+
+            if (appointmentDate.isBefore(currentDate) || (appointmentDate.equals(currentDate) && appointmentTime.isBefore(currentTime))) {
+                AppointmentDTO appointmentDTO = new AppointmentDTO(appointment);
+                appointmentsDTO.add(appointmentDTO);
+            }
+        }
+
+        return new ResponseEntity<>(appointmentsDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/userFuture/{userId}")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
+    public ResponseEntity<List<AppointmentDTO>> getUserFutureAppointments(@PathVariable Integer userId) {
+        User user = userService.findOne(userId);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Set<Appointments> appointments = user.getAppointments();
+        List<AppointmentDTO> appointmentsDTO = new ArrayList<>();
+
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+
+        for (Appointments appointment : appointments) {
+            LocalDate appointmentDate = appointment.getDateOfAppointment();
+            LocalTime appointmentTime = appointment.getTimeOfAppointment();
+
+            // Check if the appointment's date is after the current date
+            // or if the appointment's date is the current date but the time is after the current time
+            if (appointmentDate.isAfter(currentDate) || (appointmentDate.equals(currentDate) && appointmentTime.isAfter(currentTime))) {
+                AppointmentDTO appointmentDTO = new AppointmentDTO(appointment);
+                appointmentsDTO.add(appointmentDTO);
+            }
+        }
+
+        return new ResponseEntity<>(appointmentsDTO, HttpStatus.OK);
+    }
+
 }
