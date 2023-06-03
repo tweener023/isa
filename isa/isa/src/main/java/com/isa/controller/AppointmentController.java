@@ -1,5 +1,6 @@
 package com.isa.controller;
 
+import com.google.zxing.NotFoundException;
 import com.isa.dto.AppointmentDTO;
 import com.isa.dto.FacilityDTO;
 import com.isa.dto.UserDTO;
@@ -36,6 +37,10 @@ public class AppointmentController {
 
     @Autowired
     FacilityService facilityService;
+
+    public AppointmentController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
+    }
 
     @GetMapping(value = "/all")
     @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
@@ -230,6 +235,12 @@ public class AppointmentController {
         }
 
         return new ResponseEntity<>(appointmentsDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/{appointmentId}/user")
+    public ResponseEntity<String> updateAppointmentUser(@PathVariable Integer appointmentId) {
+        appointmentService.updateAppointmentUser(appointmentId);
+        return ResponseEntity.ok("Appointment user updated successfully.");
     }
 
 }
