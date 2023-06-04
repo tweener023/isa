@@ -19,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -235,9 +237,24 @@ public class AppointmentController {
 
     @PutMapping("/{appointmentId}/user")
     @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
-    public ResponseEntity<String> updateAppointmentUser(@PathVariable Integer appointmentId) {
-        appointmentService.updateAppointmentUser(appointmentId);
-        return ResponseEntity.ok("Appointment user updated successfully.");
+    public ResponseEntity<String> userCancelsAppointment(@PathVariable Integer appointmentId) {
+        Appointments appointment = appointmentService.findOne(appointmentId);
+
+        if (appointment == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        LocalDateTime appointmentDateTime = LocalDateTime.of(appointment.getDateOfAppointment(), appointment.getTimeOfAppointment());
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        long hoursUntilAppointment = currentDateTime.until(appointmentDateTime, ChronoUnit.HOURS);
+
+        if (hoursUntilAppointment < 24) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Cannot cancel appointment within 24 hours.");
+        }
+
+        appointmentService.userCancelsAppointment(appointmentId);
+        return ResponseEntity.ok("User canceled appointment successfully.");
     }
 
 }

@@ -51,7 +51,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    public void updateAppointmentUser(Integer appointmentId) {
+    public void userCancelsAppointment(Integer appointmentId) {
         Appointments appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid appointment ID"));
 
