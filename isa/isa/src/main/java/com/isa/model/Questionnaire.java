@@ -1,6 +1,7 @@
 package com.isa.model;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -98,11 +99,21 @@ public class Questionnaire {
         this.donatedBlood = donatedBlood;
         this.user = user;
 
-        if (!donatedBlood && !hadTattoo && !drunkAlcohol) {
+        if (!donatedBlood && !hadTattoo && !drunkAlcohol && isAdult(dateOfBirth)) {
             this.accepted = true;
         } else {
             this.accepted = false;
         }
+    }
+
+    public static boolean isAdult(Date dateOfBirth) {
+        Calendar today = Calendar.getInstance();
+        Calendar dob = Calendar.getInstance();
+        dob.setTime(dateOfBirth);
+
+        dob.add(Calendar.YEAR, 18);
+
+        return dob.before(today) || dob.equals(today);
     }
 
     public Integer getId() {
@@ -226,7 +237,7 @@ public class Questionnaire {
     }
 
     public Boolean getAccepted() {
-        if (!donatedBlood && !hadTattoo && !drunkAlcohol) {
+        if (!donatedBlood && !hadTattoo && !drunkAlcohol && isAdult(getDateOfBirth())) {
             return accepted;
         } else {
             return false;

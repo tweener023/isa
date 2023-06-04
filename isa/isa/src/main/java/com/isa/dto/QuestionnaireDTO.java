@@ -5,6 +5,7 @@ import com.isa.model.Gender;
 import com.isa.model.Questionnaire;
 import com.isa.model.User;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class QuestionnaireDTO {
@@ -54,7 +55,7 @@ public class QuestionnaireDTO {
         this.hadTattoo = questionnaire.getHadTattoo();
         this.dangerousJob = questionnaire.getDangerousJob();
         this.donatedBlood = questionnaire.getDonatedBlood();
-        this.accepted = !donatedBlood && !hadTattoo && !drunkAlcohol;
+        this.accepted = !donatedBlood && !hadTattoo && !drunkAlcohol && isAdult(getDateOfBirth());
         this.userId = questionnaire.getUser().getId();
     }
 
@@ -74,12 +75,22 @@ public class QuestionnaireDTO {
         this.job = job;
         this.timesGiven = timesGiven;
         this.bloodType = bloodType;
-        this.accepted = !donatedBlood && !hadTattoo && !drunkAlcohol;
+        this.accepted = !donatedBlood && !hadTattoo && !drunkAlcohol && isAdult(getDateOfBirth());
         this.drunkAlcohol = drunkAlcohol;
         this.hadTattoo = hadTattoo;
         this.dangerousJob = dangerousJob;
         this.donatedBlood = donatedBlood;
         this.userId = user.getId();
+    }
+
+    private static boolean isAdult(Date dateOfBirth) {
+        Calendar today = Calendar.getInstance();
+        Calendar dob = Calendar.getInstance();
+        dob.setTime(dateOfBirth);
+
+        dob.add(Calendar.YEAR, 18);
+
+        return dob.before(today) || dob.equals(today);
     }
 
     public Integer getId() {

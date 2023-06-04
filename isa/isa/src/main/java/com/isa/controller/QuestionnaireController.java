@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -224,6 +225,12 @@ public class QuestionnaireController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
+        Calendar dob = Calendar.getInstance();
+        dob.setTime(questionnaireDTO.getDateOfBirth());
+        dob.add(Calendar.YEAR, 18);
+        Calendar today = Calendar.getInstance();
+        boolean isAdult = dob.before(today) || dob.equals(today);
+
         Questionnaire questionnaire = new Questionnaire(
                 questionnaireDTO.getDateOfQuestionnaire(),
                 questionnaireDTO.getFirstName(),
@@ -246,7 +253,7 @@ public class QuestionnaireController {
                 userService.findOne(questionnaireDTO.getUserId())
         );
 
-        questionnaire.setAccepted(!questionnaire.getDonatedBlood() && !questionnaire.getHadTattoo() && !questionnaire.getDrunkAlcohol());
+        questionnaire.setAccepted(!questionnaire.getDonatedBlood() && !questionnaire.getHadTattoo() && !questionnaire.getDrunkAlcohol() && isAdult);
 
         questionnaireService.save(questionnaire);
 
