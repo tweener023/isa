@@ -1,6 +1,7 @@
 package com.isa.dto;
 
 import com.isa.model.Appointments;
+import com.isa.model.Complaint;
 import com.isa.model.Facility;
 import com.isa.model.User;
 
@@ -11,6 +12,7 @@ public class FacilityDTO {
     private String centerAddress;
     private String centerDescription;
     private Appointments[] centerAppointments;
+    private Complaint[] centerComplaints;
     private UserDTO centerAdmins;
     private Integer centerSupplies;
 
@@ -45,6 +47,10 @@ public class FacilityDTO {
 
     public Appointments[] getCenterAppointments() {
         return centerAppointments;
+    }
+
+    public Complaint[] getCenterComplaints() {
+        return centerComplaints;
     }
 
     public UserDTO getCenterAdmins() {

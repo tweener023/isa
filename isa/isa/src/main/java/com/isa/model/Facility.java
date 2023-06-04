@@ -25,6 +25,9 @@ public class Facility {
     @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Appointments> centerAppointments = new HashSet<>();
 
+    @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL)
+    private Set<Complaint> complaints = new HashSet<>();
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User admin;
@@ -80,6 +83,14 @@ public class Facility {
 
     public void setCenterAppointments(Set<Appointments> centerAppointments) {
         this.centerAppointments = centerAppointments;
+    }
+
+    public Set<Complaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(Set<Complaint> complaints) {
+        this.complaints = complaints;
     }
 
     public User getCenterAdmins() {
