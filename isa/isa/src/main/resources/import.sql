@@ -1,12 +1,4 @@
---insert into users (email, password, first_name, last_name, address, city, country, phone_number, jmbg, gender, job, workplace, role, points_collected) values ('marko@email.com', '1234', 'Marko', 'Marković', 'Kisacka 45', 'Novi Sad', 'Srbija', '1234', 1234, 0, 'student', 'FTN', 0, 5);
---insert into users (email, first_name, last_name, points_collected) values ('milan@email.com', 'Milan', 'Milanović', 4);
---insert into users (email, first_name, last_name, points_collected) values ('ivana@email.com', 'Ivana', 'Ivanović', 4);
---insert into users (email, first_name, last_name, points_collected) values ('bojan@email.com', 'Bojan', 'Bojanović', 2);
---insert into users (email, first_name, last_name, points_collected) values ('pera@email.com', 'Pera', 'Perić', 1);
---insert into users (email, first_name, last_name, points_collected) values ('zoran@email.com', 'Zoran', 'Zoranović', 2);
---insert into users (email, first_name, last_name, points_collected) values ('bojana@email.com', 'Bojana', 'Bojanović', 5);
---insert into users (email, first_name, last_name, points_collected) values ('milana@email.com', 'Milana', 'Milanović', 7);
---insert into users (email, first_name, last_name, points_collected) values ('jovana@email.com', 'Jovana', 'Jovanić', 9);
+
 insert into users (username, email, password, first_name, last_name, address, city, zip_code, country, phone_number, jmbg, gender, job, workplace, points_collected, filled_questionnaire, account_verified) values ('mare','marko@email.com', '$2a$10$iwMIUYsBRR4n5dHJi7ZCUeeeDYgBqrt8dyVCUHvbKju6fKdI.Q2UC', 'Marko', 'Marković', 'Kisacka 45', 'Novi Sad','21000', 'Srbija', '1234', 1234,0, 'student', 'FTN',11, true, true);
 insert into users (username, email, password, first_name, last_name, address, city, zip_code, country, phone_number, jmbg, gender, job, workplace, points_collected, filled_questionnaire, account_verified) values ('saki','saki@email.com', '$2a$10$iwMIUYsBRR4n5dHJi7ZCUeeeDYgBqrt8dyVCUHvbKju6fKdI.Q2UC', 'Saki', 'Sakic', 'Kisacka 45', 'Novi Sad','21000', 'Srbija', '0656693696', 12342111, 1, 'student', 'FTN',1, false, true);
 insert into users (username, email, password, first_name, last_name, address, city, zip_code, country, phone_number, jmbg, gender, job, workplace, points_collected, filled_questionnaire, account_verified) values ('mile','mile@email.com', '$2a$10$iwMIUYsBRR4n5dHJi7ZCUeeeDYgBqrt8dyVCUHvbKju6fKdI.Q2UC', 'Mile', 'Milic', 'Kisacka 45', 'Novi Sad','21000', 'Srbija', '123324', 12324, 1, 'student', 'FTN',0, false, false);

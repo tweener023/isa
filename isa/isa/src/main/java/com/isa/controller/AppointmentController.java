@@ -91,30 +91,35 @@ public class AppointmentController {
         return new ResponseEntity<>(new AppointmentDTO(appointment), HttpStatus.OK);
     }
 
-    @PostMapping(consumes = "application/json")
+    //add appointment that has no user
+    @PostMapping("/{facilityId}/{userId}/addAppointment")
     @PreAuthorize("hasRole('MEDIC')")
-    public ResponseEntity<AppointmentDTO> saveAppointment(@RequestBody AppointmentDTO appointmentDTO) {
+    public ResponseEntity<AppointmentDTO> addBlankAppointment(@PathVariable("facilityId") String facilityId,@PathVariable("userId") String userId, @RequestBody AppointmentDTO appointmentDTO) {
 
+        // a user must exist
+        Integer id = Integer.parseInt(facilityId);
+        Facility facility = facilityService.findOne(id);
 
-        if (appointmentDTO.getFacility() == null ) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        User user = userService.findOne(appointmentDTO.getUser().getId());
-        Facility facility = facilityService.findOne(appointmentDTO.getFacility().getCenterId());
+        Integer uId = Integer.parseInt(userId);
+        User user = userService.findOne(uId);
 
         if (facility == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        System.out.println("---------------------------------------------------------------------------------- ");
+
+        System.out.println("EVO GA DATUM " + appointmentDTO.getDateOfAppointment());
+
+        System.out.println("EVO GA VREME " + appointmentDTO.getDateOfAppointment());
+        System.out.println("---------------------------------------------------------------------------------- ");
+
         Appointments appointments = new Appointments();
         appointments.setAppointmentId(appointmentDTO.getAppointmentId());
         appointments.setDateOfAppointment(appointmentDTO.getDateOfAppointment());
         appointments.setTimeOfAppointment(appointmentDTO.getTimeOfAppointment());
+        appointments.setUser(user);
         appointments.setFacility(facility);
-        if(user!=null){
-            appointments.setUser(user);
-        }
 
         appointments = appointmentService.save(appointments);
 

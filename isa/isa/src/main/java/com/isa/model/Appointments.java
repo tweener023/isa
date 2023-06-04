@@ -16,17 +16,17 @@ public class Appointments {
     private Integer appointmentId;
 
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-    @Column(name = "dateOfAppointment", nullable = false)
+    @Column(name = "dateOfAppointment")
     private LocalDate dateOfAppointment;
 
-    @Column(name = "timeOfAppointment", nullable = false)
+    @Column(name = "timeOfAppointment")
     private LocalTime timeOfAppointment;
 
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "center_id")
     private Facility center;
 
