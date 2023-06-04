@@ -30,12 +30,15 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.isa.dto.UserDTO;
 import com.isa.model.User;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
 
 import java.awt.Color;
 
@@ -262,6 +265,7 @@ public class UserController {
 
 	@PutMapping(value = "/{userId}/appointments", consumes = "application/json")
 	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
+	@Transactional
 	public ResponseEntity<UserDTO> addAppointmentToUser(@PathVariable Integer userId, @RequestBody AppointmentDTO appointmentDTO) {
 
 		User user = userService.findOne(userId);
@@ -290,7 +294,11 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		}
 
+		LocalDate today = LocalDate.now();
+		LocalTime currentTime = LocalTime.now();
+
 		boolean hasAppointmentFromSameFacility = user.getAppointments().stream()
+				.filter(a -> a.getDateOfAppointment().isAfter(today) || (a.getDateOfAppointment().isEqual(today) && a.getTimeOfAppointment().isAfter(currentTime)))
 				.anyMatch(a -> a.getFacilityName().getCenterId().equals(appointment.getFacilityName().getCenterId()));
 
 		if (hasAppointmentFromSameFacility) {
