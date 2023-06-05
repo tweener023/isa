@@ -100,7 +100,7 @@ public class AppointmentController {
         Facility facility = facilityService.findOne(id);
 
         Integer uId = Integer.parseInt(userId);
-        User user = userService.findOne(uId);
+        User user = userService.findOne(5);     //dodeli odmah zokiju
 
         if (facility == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
