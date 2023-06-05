@@ -23,12 +23,15 @@ public class Complaint {
     @Column(name = "status_of_complaint")
     private StatusOfComplaint statusOfComplaint;
 
+    @Column(name = "directed_to")
+    private DirectedTo directedTo;
+
 
     public Complaint() {
         super();
     }
 
-    public Complaint(String complaintText, StatusOfComplaint statusOfComplaint) {
+    public Complaint(String complaintText, StatusOfComplaint statusOfComplaint,DirectedTo directedTo) {
         this.complaintText = complaintText;
         this.statusOfComplaint = statusOfComplaint;
     }
@@ -71,5 +74,17 @@ public class Complaint {
 
     public void setStatusOfComplaint(StatusOfComplaint statusOfComplaint) {
         this.statusOfComplaint = statusOfComplaint;
+    }
+
+    public void setComplaintId(Integer complaintId) {
+        this.complaintId = complaintId;
+    }
+
+    public DirectedTo getDirectedTo() {
+        return directedTo;
+    }
+
+    public void setDirectedTo(DirectedTo directedTo) {
+        this.directedTo = directedTo;
     }
 }

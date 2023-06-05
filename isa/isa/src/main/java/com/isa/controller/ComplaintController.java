@@ -91,6 +91,7 @@ public class ComplaintController {
         complaint.setUser(user);
         complaint.setComplaintText(complaintDTO.getComplaintText());
         complaint.setStatusOfComplaint(complaintDTO.getStatusOfComplaint());
+        complaint.setDirectedTo(complaintDTO.getDirectedTo());
 
         complaint = complaintService.saveComplaint(complaint);
 
@@ -108,6 +109,7 @@ public class ComplaintController {
 
         complaint.setComplaintText(complaintDTO.getComplaintText());
         complaint.setStatusOfComplaint(complaintDTO.getStatusOfComplaint());
+        complaint.setDirectedTo(complaintDTO.getDirectedTo());
 
         complaint = complaintService.saveComplaint(complaint);
 
@@ -161,7 +163,13 @@ public class ComplaintController {
         Complaint complaint = new Complaint();
         complaint.setFacility(facility);
         complaint.setUser(user);
-        complaint.setComplaintText("Complaint about " + complaintFacility.getCenterName() + ": " + complaintDTO.getComplaintText());
+        complaint.setDirectedTo(complaintDTO.getDirectedTo());
+        if (complaintDTO.getDirectedTo() == DirectedTo.FACILITY) {
+            complaint.setComplaintText("Complaint about " + complaintFacility.getCenterName() + ": " + complaintDTO.getComplaintText());
+        } else {
+            complaint.setComplaintText("Complaint about staff lead by" + complaintFacility.getCenterAdmins().getFirstName() + " " + complaintFacility.getCenterAdmins().getLastName() + ": " + complaintDTO.getComplaintText());
+
+        }
         complaint.setStatusOfComplaint(StatusOfComplaint.WAITING_FOR_RESPONSE);
 
         complaint = complaintService.saveComplaint(complaint);
