@@ -2,8 +2,11 @@ package com.isa.controller;
 
 import com.isa.dto.ComplaintDTO;
 import com.isa.model.Complaint;
+import com.isa.model.Facility;
+import com.isa.model.StatusOfComplaint;
 import com.isa.model.User;
 import com.isa.service.ComplaintService;
+import com.isa.service.FacilityService;
 import com.isa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -24,6 +28,9 @@ public class ComplaintController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FacilityService facilityService;
 
     @GetMapping(value = "/all")
     @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
@@ -118,5 +125,30 @@ public class ComplaintController {
         complaintService.deleteComplaint(complaint);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping(value = "/createComplaint", consumes = "application/json")
+    public ResponseEntity<ComplaintDTO> createComplaint(@RequestBody ComplaintDTO complaintDTO) {
+        User user = userService.findOne(complaintDTO.getUserId());
+        Set<Facility> userFacilities = user.getFacilities();
+
+        Facility facility = facilityService.findOne(complaintDTO.getFacilityId());
+        if (!userFacilities.contains(facility)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // Create a new Complaint object
+        Complaint complaint = new Complaint();
+        complaint.setFacility(facility);
+        complaint.setUser(user);
+        complaint.setComplaintText("My complaint is about " + facility.getCenterName() + " " + complaintDTO.getComplaintText());
+        complaint.setStatusOfComplaint(StatusOfComplaint.WAITING_FOR_RESPONSE);
+
+        // Save the new complaint
+        complaint = complaintService.saveComplaint(complaint);
+
+        // Create and return the DTO for the created complaint
+        ComplaintDTO createdComplaintDTO = new ComplaintDTO(complaint);
+        return new ResponseEntity<>(createdComplaintDTO, HttpStatus.CREATED);
     }
 }

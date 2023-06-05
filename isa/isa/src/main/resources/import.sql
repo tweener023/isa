@@ -20,7 +20,7 @@ insert into facility ( user_id, center_name, center_address, center_description,
 
 
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,1, '2023-06-05', '10:30:00');
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,1, '2021-01-09', '11:00:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (1,1, '2021-01-09', '11:00:00');
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,1, '2021-08-09', '11:30:00');
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,2, '2021-08-09', '12:00:00');
 

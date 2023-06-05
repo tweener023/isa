@@ -80,7 +80,7 @@ public class User {
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Appointments> appointments = new HashSet<Appointments>();
 
-	@OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "admin", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Facility> facilities = new HashSet<Facility>();
 
 
@@ -269,6 +269,14 @@ public class User {
 
 	public void setAccountVerified(boolean accountVerified) {
 		this.accountVerified = accountVerified;
+	}
+
+	public Set<Facility> getFacilities() {
+		return facilities;
+	}
+
+	public void setFacilities(Set<Facility> facilities) {
+		this.facilities = facilities;
 	}
 
 	@Override
