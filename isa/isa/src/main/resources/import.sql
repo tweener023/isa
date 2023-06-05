@@ -55,4 +55,4 @@ insert into user_roles(user_id,role_id) values (9,2);
 
 insert into questionnaire (date, first_name, parent_name, last_name, jmbg, date_of_birth, gender, address, city, phone_number, workplace, job, times_given, blood_type, accepted, drunk_alcohol, had_tattoo, dangerous_job, donated_blood, user_id) values ('2023-05-26', 'Marko', 'Nikola', 'Markovic', '1234567890', '1990-01-01', 0, '123 Main St', 'City', '1234567890', 'FTN', 'student', 3, 0, true, true, false, true, false, 1);
 
-
+insert into analytics(average_grade, appointments_last_month, appointments_last_year, appointments_total, supplies_last_month, supplies_last_year, supplies_total, equipment_last_month, equipment_last_year, equipment_total, center_id) values (4.3, 5, 55 , 1000, 15, 25, 250, 10,35,110,3);
