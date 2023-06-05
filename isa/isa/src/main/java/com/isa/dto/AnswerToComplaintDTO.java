@@ -4,7 +4,7 @@ import com.isa.model.AnswerToComplaint;
 import com.isa.model.Complaint;
 
 public class AnswerToComplaintDTO {
-    private  Integer id;
+    private Integer id;
     private Integer complaintId;
     private String answerToComplaintText;
 
