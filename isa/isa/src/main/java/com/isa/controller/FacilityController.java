@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -137,6 +139,34 @@ public class FacilityController {
             appointmentsDTO.add(appointmentDTO);
         }
         return new ResponseEntity<>(appointmentsDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/userPast/{userId}")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
+    public ResponseEntity<List<FacilityDTO>> getUserPastFacilities(@PathVariable Integer userId) {
+        User user = userService.findOne(userId);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Set<Appointments> appointments = user.getAppointments();
+        List<FacilityDTO> facilitiesDTO = new ArrayList<>();
+
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+
+        for (Appointments appointment : appointments) {
+            LocalDate appointmentDate = appointment.getDateOfAppointment();
+            LocalTime appointmentTime = appointment.getTimeOfAppointment();
+
+            if (appointmentDate.isBefore(currentDate) || (appointmentDate.equals(currentDate) && appointmentTime.isBefore(currentTime))) {
+                FacilityDTO facilityDTO = new FacilityDTO(appointment.getFacilityName());
+                facilitiesDTO.add(facilityDTO);
+            }
+        }
+
+        return new ResponseEntity<>(facilitiesDTO, HttpStatus.OK);
     }
 
 }

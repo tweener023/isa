@@ -1,10 +1,9 @@
 package com.isa.controller;
 
+import com.isa.dto.AppointmentDTO;
 import com.isa.dto.ComplaintDTO;
-import com.isa.model.Complaint;
-import com.isa.model.Facility;
-import com.isa.model.StatusOfComplaint;
-import com.isa.model.User;
+import com.isa.dto.FacilityDTO;
+import com.isa.model.*;
 import com.isa.service.ComplaintService;
 import com.isa.service.FacilityService;
 import com.isa.service.UserService;
@@ -14,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -127,28 +128,64 @@ public class ComplaintController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping(value = "/createComplaint", consumes = "application/json")
-    public ResponseEntity<ComplaintDTO> createComplaint(@RequestBody ComplaintDTO complaintDTO) {
+    @PostMapping(value = "/sendComplaint",consumes = "application/json")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
+    public ResponseEntity<ComplaintDTO> sendComplaint(@RequestBody ComplaintDTO complaintDTO) {
         User user = userService.findOne(complaintDTO.getUserId());
-        Set<Facility> userFacilities = user.getFacilities();
 
-        Facility facility = facilityService.findOne(complaintDTO.getFacilityId());
-        if (!userFacilities.contains(facility)) {
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        List<FacilityDTO> pastFacilities = getPastFacilitiesForUser(user);
+
+        // Check if the complaint facility exists in past facilities
+        FacilityDTO complaintFacility = null;
+        for (FacilityDTO facilityDTO : pastFacilities) {
+            if (facilityDTO.getCenterId().equals(complaintDTO.getFacilityId())) {
+                complaintFacility = facilityDTO;
+                break;
+            }
+        }
+
+        if (complaintFacility == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        // Create a new Complaint object
+        Facility facility = facilityService.findOne(complaintFacility.getCenterId());
+
+        if (facility == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         Complaint complaint = new Complaint();
         complaint.setFacility(facility);
         complaint.setUser(user);
-        complaint.setComplaintText("My complaint is about " + facility.getCenterName() + " " + complaintDTO.getComplaintText());
+        complaint.setComplaintText("Complaint about " + complaintFacility.getCenterName() + ": " + complaintDTO.getComplaintText());
         complaint.setStatusOfComplaint(StatusOfComplaint.WAITING_FOR_RESPONSE);
 
-        // Save the new complaint
         complaint = complaintService.saveComplaint(complaint);
 
-        // Create and return the DTO for the created complaint
-        ComplaintDTO createdComplaintDTO = new ComplaintDTO(complaint);
-        return new ResponseEntity<>(createdComplaintDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(new ComplaintDTO(complaint), HttpStatus.CREATED);
+    }
+
+    public static List<FacilityDTO> getPastFacilitiesForUser(User user) {
+        Set<Appointments> appointments = user.getAppointments();
+        List<FacilityDTO> facilitiesDTO = new ArrayList<>();
+
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+
+        for (Appointments appointment : appointments) {
+            LocalDate appointmentDate = appointment.getDateOfAppointment();
+            LocalTime appointmentTime = appointment.getTimeOfAppointment();
+
+            if (appointmentDate.isBefore(currentDate) || (appointmentDate.equals(currentDate) && appointmentTime.isBefore(currentTime))) {
+                FacilityDTO facilityDTO = new FacilityDTO(appointment.getFacilityName());
+                facilitiesDTO.add(facilityDTO);
+            }
+        }
+
+        return facilitiesDTO;
     }
 }

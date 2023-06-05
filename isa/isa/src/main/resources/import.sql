@@ -20,16 +20,16 @@ insert into facility ( user_id, center_name, center_address, center_description,
 
 
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,1, '2023-06-05', '10:30:00');
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (1,1, '2021-01-09', '11:00:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (2,1, '2021-01-09', '11:00:00');
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,1, '2021-08-09', '11:30:00');
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,2, '2021-08-09', '12:00:00');
 
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (2,2, '2021-08-09', '13:30:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,2, '2021-08-09', '13:30:00');
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,3, '2021-08-09', '14:00:00');
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,4, '2021-08-09', '15:00:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (2,4, '2021-08-09', '15:00:00');
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,1, '2023-06-05', '16:30:00');
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,3, '2023-02-09', '10:30:00');
-insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,2, '2023-08-09', '10:30:00');
+insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (2,2, '2023-08-09', '10:30:00');
 
 insert into roles ( name ) values ('ROLE_USER');
 insert into roles ( name ) values ('ROLE_MEDIC');

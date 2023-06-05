@@ -22,7 +22,7 @@ public class Facility {
     @Column(name = "centerDescription", nullable = false)
     private String centerDescription;
 
-    @OneToMany(mappedBy = "center", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "center", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Appointments> centerAppointments = new HashSet<>();
 
     @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL)

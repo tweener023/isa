@@ -185,7 +185,7 @@ public class AppointmentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Set<Appointments> appointments = user.getAppointments();
+        Set<Appointments> appointments = user.getAppointments();;
         List<AppointmentDTO> appointmentsDTO = new ArrayList<>();
 
         LocalDate currentDate = LocalDate.now();
