@@ -1,6 +1,5 @@
 package com.isa.controller;
 
-import com.google.zxing.NotFoundException;
 import com.isa.dto.AppointmentDTO;
 import com.isa.dto.FacilityDTO;
 import com.isa.dto.UserDTO;
@@ -106,13 +105,6 @@ public class AppointmentController {
         if (facility == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        System.out.println("---------------------------------------------------------------------------------- ");
-
-        System.out.println("EVO GA DATUM " + appointmentDTO.getDateOfAppointment());
-
-        System.out.println("EVO GA VREME " + appointmentDTO.getDateOfAppointment());
-        System.out.println("---------------------------------------------------------------------------------- ");
 
         Appointments appointments = new Appointments();
         appointments.setAppointmentId(appointmentDTO.getAppointmentId());
