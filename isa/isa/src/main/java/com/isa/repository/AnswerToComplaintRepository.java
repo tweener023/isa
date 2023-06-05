@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AnswerToComplaintRepository extends JpaRepository<AnswerToComplaint, Integer> {
+    AnswerToComplaint findByComplaint_ComplaintId(Integer complaintId);
 }

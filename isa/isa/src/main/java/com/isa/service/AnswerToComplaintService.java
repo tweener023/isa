@@ -28,4 +28,8 @@ public class AnswerToComplaintService {
     public void deleteAnswerToComplaint(AnswerToComplaint answerToComplaint) {
         answerToComplaintRepository.delete(answerToComplaint);
     }
+
+    public AnswerToComplaint getAnswerComplaintId(Integer complaintId) {
+        return answerToComplaintRepository.findByComplaint_ComplaintId(complaintId);
+    }
 }

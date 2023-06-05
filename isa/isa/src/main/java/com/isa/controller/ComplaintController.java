@@ -192,6 +192,21 @@ public class ComplaintController {
         return new ResponseEntity<>(complaintDTOs, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/respondedTo")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
+    public ResponseEntity<List<ComplaintDTO>> getAllComplaintsRespondedTo() {
+        List<Complaint> complaints = complaintService.getAllComplaints();
+
+        List<ComplaintDTO> complaintDTOs = new ArrayList<>();
+        for (Complaint complaint : complaints) {
+            if (complaint.getStatusOfComplaint() == StatusOfComplaint.RESPONDED_TO) {
+                complaintDTOs.add(new ComplaintDTO(complaint));
+            }
+        }
+
+        return new ResponseEntity<>(complaintDTOs, HttpStatus.OK);
+    }
+
     public static List<FacilityDTO> getPastFacilitiesForUser(User user) {
         Set<Appointments> appointments = user.getAppointments();
         List<FacilityDTO> facilitiesDTO = new ArrayList<>();
