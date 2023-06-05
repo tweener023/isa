@@ -167,7 +167,7 @@ public class ComplaintController {
         if (complaintDTO.getDirectedTo() == DirectedTo.FACILITY) {
             complaint.setComplaintText("Complaint about " + complaintFacility.getCenterName() + ": " + complaintDTO.getComplaintText());
         } else {
-            complaint.setComplaintText("Complaint about staff lead by" + complaintFacility.getCenterAdmins().getFirstName() + " " + complaintFacility.getCenterAdmins().getLastName() + ": " + complaintDTO.getComplaintText());
+            complaint.setComplaintText("Complaint about staff lead by " + complaintFacility.getCenterAdmins().getFirstName() + " " + complaintFacility.getCenterAdmins().getLastName() + ": " + complaintDTO.getComplaintText());
 
         }
         complaint.setStatusOfComplaint(StatusOfComplaint.WAITING_FOR_RESPONSE);
