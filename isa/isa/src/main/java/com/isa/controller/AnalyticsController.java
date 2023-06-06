@@ -26,7 +26,6 @@ public class AnalyticsController {
 
 
     @GetMapping(value = "/{id}/getAnalytics")
-    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<AnalyticsDTO> getFacility(@PathVariable Integer id) {
 
         System.out.println("----------------------------------------------------------------------------------" );

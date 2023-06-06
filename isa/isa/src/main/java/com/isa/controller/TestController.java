@@ -1,9 +1,12 @@
 package com.isa.controller;
 
+import com.isa.dto.AnalyticsDTO;
 import com.isa.dto.AppointmentDTO;
 import com.isa.dto.FacilityDTO;
+import com.isa.model.Analytics;
 import com.isa.model.Appointments;
 import com.isa.model.Facility;
+import com.isa.service.AnalyticsService;
 import com.isa.service.AppointmentService;
 import com.isa.service.FacilityService;
 import com.isa.service.UserService;
@@ -26,6 +29,10 @@ public class TestController {
 
     @Autowired
     AppointmentService appointmentService;
+
+    @Autowired
+    AnalyticsService analyticsService;
+
 
     @Autowired
     UserService userService;
@@ -96,5 +103,25 @@ public class TestController {
         return new ResponseEntity<>(appointmentsDTO, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{id}/getAnalytics")
+    public ResponseEntity<AnalyticsDTO> getFacility(@PathVariable Integer id) {
+
+        System.out.println("----------------------------------------------------------------------------------" );
+        System.out.println("EVO GA ID " + id);
+        System.out.println("----------------------------------------------------------------------------------" );
+
+        Facility fac = facilityService.findOne(id);
+        if (fac == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Analytics analytics = analyticsService.findOneByFacility(fac);
+
+        if (analytics == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(new AnalyticsDTO(analytics), HttpStatus.OK);
+    }
 
 }
