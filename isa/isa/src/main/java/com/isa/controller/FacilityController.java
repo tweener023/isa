@@ -33,26 +33,7 @@ public class FacilityController {
     @Autowired
     UserService userService;
 
-    /*
 
-    // GET /api/facilities?page=0&size=5&sort=centerName,DESC
-    @GetMapping
-    public ResponseEntity<List<FacilityDTO>> getfacilitiesPage(Pageable page) {
-
-        // page object holds data about pagination and sorting
-        // the object is created based on the url parameters "page", "size" and "sort"
-        Page<Facility> facilities = facilityService.findAll(page);
-
-        // convert users to DTOs
-        List<FacilityDTO> facilitiesDTO = new ArrayList<>();
-        for (Facility f : facilities) {
-            facilitiesDTO.add(new FacilityDTO(f));
-        }
-
-        return new ResponseEntity<>(facilitiesDTO, HttpStatus.OK);
-    }
-
-     */
     @GetMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
     public ResponseEntity<FacilityDTO> getFacility(@PathVariable Integer id) {
