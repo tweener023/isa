@@ -13,10 +13,10 @@ insert into users (username, email, password, first_name, last_name, address, ci
 insert into users (username, email, password, first_name, last_name, address, city, zip_code, country, phone_number, jmbg, gender, job, workplace, points_collected, filled_questionnaire, account_verified) values ('lela','lela@email.com', '$2a$10$iwMIUYsBRR4n5dHJi7ZCUeeeDYgBqrt8dyVCUHvbKju6fKdI.Q2UC', 'Lela', 'Lelic', 'Kisacka 45', 'Novi Sad','21000', 'Srbija', '1234', 24438765, 1, 'student', 'FTN',43, false, false);
 
 , filled_questionnaire
-insert into facility ( user_id, center_name, center_address, center_description, center_supplies) values (7,'Klinicki centar Vojvodine', 'Vojvodjanska 16', 'ovo je opis za kcv', 123);
-insert into facility ( user_id, center_name, center_address, center_description, center_supplies) values (8,'MediGroup', 'Medigroup 16', 'ovo je opis za medigroup', 1);
-insert into facility ( user_id, center_name, center_address, center_description, center_supplies) values (6,'Klinicki centar Beograd', 'Beogradska 16', 'ovo je opis za bg', 3);
-insert into facility ( user_id, center_name, center_address, center_description, center_supplies) values (9,'Klinicki centar AAAA', 'AAAA 16', 'ovo je opis za kcv', 13);
+insert into facility ( user_id, center_name, center_address, center_description, center_supplies, grade) values (7,'Klinicki centar Vojvodine', 'Vojvodjanska 16', 'ovo je opis za kcv', 123, 4.3);
+insert into facility ( user_id, center_name, center_address, center_description, center_supplies, grade) values (8,'MediGroup', 'Medigroup 16', 'ovo je opis za medigroup', 1, 4.4);
+insert into facility ( user_id, center_name, center_address, center_description, center_supplies, grade) values (6,'Klinicki centar Beograd', 'Beogradska 16', 'ovo je opis za bg', 3, 4.4);
+insert into facility ( user_id, center_name, center_address, center_description, center_supplies, grade) values (9,'Klinicki centar AAAA', 'AAAA 16', 'ovo je opis za kcv', 13, 4.5);
 
 
 insert into appointments ( user_id, center_id, date_of_appointment, time_of_appointment) values (5,1, '2023-06-05', '10:30:00');

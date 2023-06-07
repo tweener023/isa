@@ -15,6 +15,7 @@ public class FacilityDTO {
     private Complaint[] centerComplaints;
     private UserDTO centerAdmins;
     private Integer centerSupplies;
+    private Float grade;
 
     public FacilityDTO() {
 
@@ -27,6 +28,7 @@ public class FacilityDTO {
         centerDescription = facility.getCenterDescription();
         centerAdmins = new UserDTO(facility.getCenterAdmins()) ;
         centerSupplies = facility.getCenterSupplies();
+        grade = facility.getGrade();
     }
 
     public Integer getCenterId() {
@@ -61,4 +63,11 @@ public class FacilityDTO {
         return centerSupplies;
     }
 
+    public Float getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Float grade) {
+        this.grade = grade;
+    }
 }

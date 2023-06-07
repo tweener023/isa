@@ -22,6 +22,9 @@ public class Facility {
     @Column(name = "centerDescription", nullable = false)
     private String centerDescription;
 
+    @Column(name = "grade")
+    private Float grade;
+
     @OneToMany(mappedBy = "center", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Appointments> centerAppointments = new HashSet<>();
 
@@ -37,12 +40,13 @@ public class Facility {
 
     public Facility() {super();}
 
-    public Facility(Integer centerId, String centerName, String centerAddress, String centerDescription,  Integer centerSupplies) {
+    public Facility(Integer centerId, String centerName, String centerAddress, String centerDescription,  Integer centerSupplies, Float grade) {
         this.centerId = centerId;
         this.centerName = centerName;
         this.centerAddress = centerAddress;
         this.centerDescription = centerDescription;
         this.centerSupplies = centerSupplies;
+        this.grade = grade;
     }
 
     public Integer getCenterId() {
@@ -109,4 +113,11 @@ public class Facility {
         this.centerSupplies = centerSupplies;
     }
 
+    public Float getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Float grade) {
+        this.grade = grade;
+    }
 }

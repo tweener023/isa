@@ -60,6 +60,7 @@ public class FacilityController {
         facility.setCenterDescription(facilityDTO.getCenterDescription());
         facility.setCenterAdmins(user);
         facility.setCenterSupplies(facilityDTO.getCenterSupplies());
+        facility.setGrade(facilityDTO.getGrade());
 
 
         facility = facilityService.save(facility);
@@ -84,6 +85,7 @@ public class FacilityController {
         facility.setCenterDescription(facilityDTO.getCenterDescription());
         facility.setCenterAdmins(user);
         facility.setCenterSupplies(facilityDTO.getCenterSupplies());
+        facility.setGrade(facilityDTO.getGrade());
 
 
         facility = facilityService.save(facility);
