@@ -106,10 +106,6 @@ public class TestController {
     @GetMapping(value = "/{id}/getAnalytics")
     public ResponseEntity<AnalyticsDTO> getFacility(@PathVariable Integer id) {
 
-        System.out.println("----------------------------------------------------------------------------------" );
-        System.out.println("EVO GA ID " + id);
-        System.out.println("----------------------------------------------------------------------------------" );
-
         Facility fac = facilityService.findOne(id);
         if (fac == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

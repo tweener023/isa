@@ -16,6 +16,7 @@ public class FacilityDTO {
     private UserDTO centerAdmins;
     private Integer centerSupplies;
     private Float grade;
+    private Boolean isAvailable;
 
     public FacilityDTO() {
 
@@ -29,6 +30,7 @@ public class FacilityDTO {
         centerAdmins = new UserDTO(facility.getCenterAdmins()) ;
         centerSupplies = facility.getCenterSupplies();
         grade = facility.getGrade();
+        isAvailable = facility.getAvailable();
     }
 
     public Integer getCenterId() {
@@ -69,5 +71,13 @@ public class FacilityDTO {
 
     public void setGrade(Float grade) {
         this.grade = grade;
+    }
+
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
     }
 }
