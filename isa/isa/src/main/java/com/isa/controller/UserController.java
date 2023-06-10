@@ -213,35 +213,6 @@ public class UserController {
 		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/prezime")
-	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
-	public ResponseEntity<List<UserDTO>> pronadjiUserePoPrezimenu(@RequestParam String lastName) {
-
-		List<User> users = userService.pronadjiPoPrezimenu(lastName);
-
-		// convert users to DTOs
-		List<UserDTO> usersDTO = new ArrayList<>();
-		for (User u : users) {
-			usersDTO.add(new UserDTO(u));
-		}
-		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
-	}
-
-	@GetMapping(value = "/findFirstLast")
-	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
-	public ResponseEntity<List<UserDTO>> getUsersByFirstNameAndLastName(@RequestParam String firstName,
-			@RequestParam String lastName) {
-
-		List<User> users = userService.findByFirstNameAndLastName(firstName, lastName);
-
-		// convert users to DTOs
-		List<UserDTO> usersDTO = new ArrayList<>();
-		for (User u : users) {
-			usersDTO.add(new UserDTO(u));
-		}
-		return new ResponseEntity<>(usersDTO, HttpStatus.OK);
-	}
-
 
 	@GetMapping(value = "facility/{userId}")
 	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
@@ -336,6 +307,61 @@ public class UserController {
 
 		return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
 	}
+
+
+	@PostMapping(value = "/{facilityId}/{userId}/customAppointment", consumes = "application/json")
+	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
+	@Transactional
+	public ResponseEntity<AppointmentDTO> createCustomAppointment(@PathVariable("facilityId") Integer facilityId,@PathVariable("userId") Integer userId, @RequestBody AppointmentDTO appointmentDTO) {
+
+		User user = userService.findOne(userId);
+		Facility facility = facilityService.findOne(facilityId);
+
+		if (facility == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		Appointments appointment = new Appointments();
+		appointment.setAppointmentId(appointmentDTO.getAppointmentId());
+		appointment.setDateOfAppointment(appointmentDTO.getDateOfAppointment());
+		appointment.setTimeOfAppointment(appointmentDTO.getTimeOfAppointment());
+		appointment.setUser(user);
+		appointment.setFacility(facility);
+
+		appointment = appointmentService.save(appointment);
+
+
+		// Generate the QR code image
+		String qrCodeText = "Appointment ID: " + appointment.getAppointmentId()
+				+ "\n Facility: " + appointment.getFacilityName().getCenterName()
+				+ "\n Date: " + appointment.getDateOfAppointment()
+				+ "\n Time: " + appointment.getTimeOfAppointment();
+		int qrCodeWidth = 200;
+		int qrCodeHeight = 200;
+		String qrCodeImageBase64;
+		try {
+			qrCodeImageBase64 = generateQRCodeImage(qrCodeText, qrCodeWidth, qrCodeHeight);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		String text = "Your appointment details:\n"
+				+ "Date: " + appointment.getDateOfAppointment() + "\n"
+				+ "Time: " + appointment.getTimeOfAppointment() + "\n"
+				+ "Facility: " + appointment.getFacilityName().getCenterName();
+
+		// Send the email with the appointment details and QR code image as an attachment
+		sendAppointmentConfirmationEmail(user.getEmail(), "Appointment Confirmation", text, qrCodeImageBase64);
+
+
+		return new ResponseEntity<>(new AppointmentDTO(appointment), HttpStatus.CREATED);
+	}
+
+
+
+
+
 
 	private void sendAppointmentConfirmationEmail(String to, String subject, String text, String qrCodeImageBase64) {
 		MimeMessage message = javaMailSender.createMimeMessage();
