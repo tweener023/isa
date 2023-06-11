@@ -152,4 +152,42 @@ public class FacilityController {
         return new ResponseEntity<>(facilitiesDTO, HttpStatus.OK);
     }
 
+    //change Visibility
+    @PutMapping("/{facilityId}/changeVisibility")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
+    public ResponseEntity<FacilityDTO> ChangeFacilityVisibility(@PathVariable("facilityId") Integer facilityId) {
+
+        // a facility must exist
+        Facility facility = facilityService.findOne(facilityId);
+
+        if (facility == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        facility.setAvailable(false);
+
+        facility = facilityService.save(facility);
+
+        return new ResponseEntity<>(new FacilityDTO(facility), HttpStatus.CREATED);
+    }
+
+    //change Visibility
+    @PutMapping("/{facilityId}/makeVisible")
+    @PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
+    public ResponseEntity<FacilityDTO> MakeVisible(@PathVariable("facilityId") Integer facilityId) {
+
+        // a facility must exist
+        Facility facility = facilityService.findOne(facilityId);
+
+        if (facility == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        facility.setAvailable(true);
+
+        facility = facilityService.save(facility);
+
+        return new ResponseEntity<>(new FacilityDTO(facility), HttpStatus.CREATED);
+    }
+
 }
