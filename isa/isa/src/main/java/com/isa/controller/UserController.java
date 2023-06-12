@@ -322,6 +322,10 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
+		if (user.isFilledQuestionnaire() == false) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+
 		Appointments appointment = new Appointments();
 		appointment.setAppointmentId(appointmentDTO.getAppointmentId());
 		appointment.setDateOfAppointment(appointmentDTO.getDateOfAppointment());
