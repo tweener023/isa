@@ -15,9 +15,8 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.isa.dto.AppointmentDTO;
 import com.isa.dto.FacilityDTO;
-import com.isa.model.Appointments;
-import com.isa.model.Facility;
-import com.isa.model.Questionnaire;
+import com.isa.model.*;
+import com.isa.payload.response.MessageResponse;
 import com.isa.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -34,13 +33,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.isa.dto.UserDTO;
-import com.isa.model.User;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import java.awt.Color;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @CrossOrigin
@@ -145,17 +145,18 @@ public class UserController {
 
 	@PutMapping(consumes = "application/json")
 	@PreAuthorize("hasAnyRole('USER', 'MEDIC', 'ADMINISTRATOR')")
-	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO) {
 
 		// a user must exist
 		User user = userService.findOne(userDTO.getId());
+
 
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 		user.setPassword(encoder.encode(userDTO.getPassword()));
-		System.out.println("EVO JE SIFRA "+ user.getPassword());
+
 
 		user.setFirstName(userDTO.getFirstName());
 		user.setLastName(userDTO.getLastName());
@@ -359,10 +360,6 @@ public class UserController {
 	}
 
 
-
-
-
-
 	private void sendAppointmentConfirmationEmail(String to, String subject, String text, String qrCodeImageBase64) {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		try {
@@ -417,5 +414,90 @@ public class UserController {
 		}
 	}
 
+
+	private boolean isValidName(String name) {
+		String regex = "^[A-Z][a-z]*$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(name);
+		return matcher.matches();
+	}
+
+	private boolean isValidAddress(String address) {
+		String regex = "^[a-zA-Z0-9\\s,.-]*$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(address);
+		return matcher.matches();
+	}
+
+	private boolean isValidCityName(String cityName) {
+		String regex = "^(?:[A-Z][a-z]*)(?:\\s[A-Z][a-z]*)*$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(cityName);
+		return matcher.matches();
+	}
+
+	private boolean isValidPhoneNumber(String phoneNumber) {
+		String regex = "^[0-9]{3}[-\\s]?[0-9]{3}[-\\s]?[0-9]{4}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(phoneNumber);
+		return matcher.matches();
+	}
+
+	private boolean isValidJMBG(String jmbg) {
+		String regex = "^[0-9]{8}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(jmbg);
+		return matcher.matches();
+	}
+
+	private boolean isValidGender(Gender gender) {
+		String genderStr = gender.toString().toUpperCase();
+		String regex = "^(MALE|FEMALE)$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(genderStr);
+		return matcher.matches();
+	}
+
+	private boolean isValidWorkplace(String workplace) {
+		String regex = "^[a-zA-Z0-9\\s.,'-]*$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(workplace);
+		return matcher.matches();
+	}
+
+	private boolean isValidJob(String job) {
+		String regex = "^[a-zA-Z\\s.,'-]*$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(job);
+		return matcher.matches();
+	}
+
+	private boolean isValidPointsCollected(String number) {
+		String regex = "^(0|[1-9]\\d*)$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(number);
+		return matcher.matches();
+	}
+
+	private boolean isValidCountry(String country) {
+		String regex = "^(?:[A-Z][a-z]*)(?:\\s[A-Z][a-z]*)*$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(country);
+		return matcher.matches();
+	}
+
+	private boolean isValidZipCode(String zipCode) {
+		String regex = "^\\d{5}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(zipCode);
+		return matcher.matches();
+	}
+
+	private boolean isValidUsername(String username) {
+		String regex = "^[a-zA-Z0-9_]{3,20}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(username);
+		return matcher.matches();
+	}
 
 }
