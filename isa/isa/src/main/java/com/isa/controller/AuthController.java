@@ -93,10 +93,9 @@ public class AuthController {
     }
 
     private boolean isValidGender(Gender gender) {
-        String genderStr = gender.toString().toUpperCase();
         String regex = "^(MALE|FEMALE)$";
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(genderStr);
+        Matcher matcher = pattern.matcher(gender.toString());
         return matcher.matches();
     }
 
