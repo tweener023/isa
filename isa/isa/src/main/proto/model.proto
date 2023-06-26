@@ -61,3 +61,4 @@ message AppointmentDTO {
   google.protobuf.Timestamp timeOfAppointment = 4;
   FacilityDTO facility = 5;
 }
+

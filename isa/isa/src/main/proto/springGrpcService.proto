@@ -7,7 +7,7 @@ import "model.proto";
 service SpringGrpcService{
   rpc communicate (MessageProto) returns (MessageResponseProto);
   rpc getAllAppointments (FacilityIdRequest) returns (AppointmentListResponseProto);
-
+  rpc createAppointment (CreateAppointmentRequest) returns (AppointmentDTO);
 }
 
 message FacilityIdRequest {
@@ -16,4 +16,9 @@ message FacilityIdRequest {
 
 message AppointmentListResponseProto {
   repeated AppointmentDTO appointments = 1;
+}
+
+message CreateAppointmentRequest {
+  int32 userId = 1;
+  AppointmentDTO appointment = 2;
 }
